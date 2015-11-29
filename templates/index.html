@@ -1,14 +1,34 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 </head>
 <body>
-    {{ header }}
-    {% for article in news %}
-        <h3>{{ article.2}}</h3>
-        <p>{{ article.1 }}</p>
-    {% endfor %}
+    <div class="blog-header">
+        <div class="container">
+            <h1 class="blog-title">{{ header }}</h1>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 blog-main">
+                <div class="blog-post">
+                {% for article in news %}
+                    <h2 class="blog-post-title">{{ article.2}}</h2>
+                    <p class="blog-post-meta">
+                        January 1, 2014 by
+                        <a href="#">Vadya</a>
+                    </p>
+                    <p>{{ article.1 }}</p>
+                    <hr>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
