@@ -42,17 +42,17 @@ def register(request):
             errors.append('This login already exists')
         if not data.get('password', ''):
             errors.append('Write password!')
-        if not data.get('conf_password', ''):
+        if not data.get('password_confirmation', ''):
             errors.append('Confirm passowrd')
-        try:
-            age = int(data.get('age', ''))
-        except ValueError:
-            errors.append('Age must be number')
+        # try:
+        #     age = int(data.get('age', ''))
+        # except ValueError:
+        #     errors.append('Age must be number')
         if not errors:
-            if data['password'] == data['conf_password']:
+            if data['password'] == data['password_confirmation']:
                 print data['password']
             print 'great'
-            add_user(data['login'], data['password'], age)
+            add_user(data['login'], data['password'], data['email'])
             # return HttpResponseRedirect('index.html')
     c['errors'] = errors
-    return render_to_response('register.html', c)
+    return render_to_response('signUp.html', c)
