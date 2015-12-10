@@ -1,14 +1,12 @@
-import hashlib
 from django.db import connection
+from other.scripts import to_md5
 
 __author__ = 'vadik'
 
 
 def add_user(user_name, password, email, status_id=1):
     cursor = connection.cursor()
-    hash_md5 = hashlib.md5()
-    hash_md5.update(password)
-    pass_md5 = hash_md5.hexdigest()
+    pass_md5 = to_md5(password)
     request = (
         'INSERT INTO Users(User_name, Password, Status_id, Email) '
         'VALUES("{user_name}", "{password}", {status_id}, "{email}");'

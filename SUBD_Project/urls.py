@@ -22,6 +22,7 @@ urlpatterns = [
     #url(r'^login/$', views.login),
     url(r'^$', views.index, name='index'),
     url(r'^register/$', views.register),
+    url(r'^login', views.sign_in),
     url(r'^article/get/(?P<article_id>\d+)/$', views.article),
     #url(r'^my_page/$', views.my_page),
 ]

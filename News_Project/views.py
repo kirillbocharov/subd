@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from django.db import connection
 from django.template.context_processors import csrf
 from sql_requests.insert import add_user
-from sql_requests.select import has_login
+from sql_requests.select import has_login, verify_user, get_news
 
 
 def index(request):
@@ -53,6 +53,34 @@ def register(request):
                 print data['password']
             print 'great'
             add_user(data['login'], data['password'], data['email'])
-            # return HttpResponseRedirect('index.html')
+            data = get_news()
+            return render_to_response('index.html',
+                                      {'header': 'Header', 'news': data})
     c['errors'] = errors
     return render_to_response('signUp.html', c)
+
+
+def sign_in(request):
+    errors = []
+    c = {}
+    c.update(csrf(request))
+    if request.method == 'POST':
+        data = request.POST
+        if not data.get('email', ''):
+            errors.append('Write email!')
+        if not data.get('password', ''):
+            errors.append('Write password')
+        if not errors:
+            authorized_user_id = verify_user(data['email'], data['password'])
+        else:
+            c['errors'] = errors
+            return render_to_response('signIn.html', c)
+        if authorized_user_id is not None:
+            # user is authorized
+            data = get_news()
+            return render_to_response('index.html',
+                                      {'header': 'Header', 'news': data})
+        else:
+            errors.append("The email you've entered doesn't match any account")
+    c['errors'] = errors
+    return render_to_response('signIn.html', c)
