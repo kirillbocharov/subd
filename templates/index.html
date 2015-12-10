@@ -18,7 +18,10 @@
             <div class="col-sm-8 blog-main">
                 <div class="blog-post">
                 {% for article in news %}
-                    <h2 class="blog-post-title">{{ article.2}}</h2>
+                    <h2 class="blog-post-title">
+                        <a href="/article/get/{{ article.0 }}">
+                             {{ article.2}}
+                        </a></h2>
                     <p class="blog-post-meta">
                         January 1, 2014 by
                         <a href="#">Vadya</a>

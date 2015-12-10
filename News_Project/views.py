@@ -17,6 +17,18 @@ def index(request):
     return render_to_response('index.html', {'header': header, 'news': data})
 
 
+def article(request, article_id):
+
+    cursor = connection.cursor()
+    cursor.execute('SELECT * FROM Comments WHERE News_id = {};'.format(article_id))
+    comments = cursor.fetchall()
+    cursor.execute('SELECT * FROM News WHERE News_id = {};'.format(article_id))
+    article = cursor.fetchall()
+    article = list(article[0])
+
+    return render_to_response('article.html', {'comments': comments, 'article': article})
+
+
 def register(request):
     errors = []
     c = {}

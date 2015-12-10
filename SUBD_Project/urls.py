@@ -19,6 +19,9 @@ from News_Project import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    #url(r'^login/$', views.login),
     url(r'^$', views.index, name='index'),
     url(r'^register/$', views.register),
+    url(r'^article/get/(?P<article_id>\d+)/$', views.article),
+    #url(r'^my_page/$', views.my_page),
 ]
