@@ -11,12 +11,12 @@ INSERT INTO Statuses(Name) VALUES("Child");
 INSERT INTO Statuses(Name) VALUES("Journalist");
 
 
-INSERT INTO Users(User_name, Password, Age, Status_id) VALUES("Vadik", "pass", 19, 1);
-INSERT INTO Users(User_name, Password, Age, Status_id) VALUES("Nikita", "pass", 20, 1);
-INSERT INTO Users(User_name, Password, Age, Status_id) VALUES("Petya", "pass", 22, 1);
-INSERT INTO Users(User_name, Password, Age, Status_id) VALUES("Dimas", "pass", 21, 2);
-INSERT INTO Users(User_name, Password, Age, Status_id) VALUES("Valera", "pass", 17, 2);
-INSERT INTO Users(User_name, Password, Age, Status_id) VALUES("Boss", "pass", 187, 1);
+INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Vadik", "pass", 19, 1, "email@email.com");
+INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Dimas", "pass", 14, 1, "email@email.com");
+INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Nikita", "pass", 20, 1, "email@email.com");
+INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Petya", "pass", 22, 1, "email@email.com");
+INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Valera", "pass", 17, 2, "email@email.com");
+INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Boss", "pass", 187, 1, "email@email.com");
 
 
 INSERT INTO Users_Roles(User_id, Role_id) VALUES(1, 1);

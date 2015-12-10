@@ -110,7 +110,8 @@ CREATE TABLE Users
         User_id integer NOT NULL,
         User_name varchar(20)  NOT NULL ,
         Password varchar(20)  NOT NULL ,
-        Age integer  NOT NULL ,
+        Email varchar(20)  NOT NULL,
+        Age integer  NULL,
         Status_id integer  NOT NULL,
         CONSTRAINT XPKUser PRIMARY KEY (User_id ASC)
         CONSTRAINT  User_has_status FOREIGN KEY (Status_id) REFERENCES Statuses(Status_id)
