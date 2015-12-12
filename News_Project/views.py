@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.db import connection
 from django.template.context_processors import csrf
-from sql_requests.insert import add_user
+from sql_requests.insert import add_user, add_comment
 from sql_requests.select import has_login, verify_user, get_news
 
 
@@ -16,14 +16,24 @@ def index(request):
 
 def article(request, article_id):
 
+    errors = []
+    c = {}
+    if request.method == 'POST':
+        data = request.POST
+        if not data.get('comment', ''):
+            errors.append('Write comment!')
+        user_id = list(request.COOKIES['user_id'][2])
+        add_comment(article_id, user_id[0], data['comment'])
+
+    #TODO rewrite request in sql_request/select.py
     cursor = connection.cursor()
     cursor.execute('SELECT * FROM Comments WHERE News_id = {};'.format(article_id))
-    comments = cursor.fetchall()
+    c['comments'] = cursor.fetchall()
     cursor.execute('SELECT * FROM News WHERE News_id = {};'.format(article_id))
-    article = cursor.fetchall()
-    article = list(article[0])
+    c['article'] = list(cursor.fetchall()[0])
+    c.update(csrf(request))
 
-    return render_to_response('article.html', {'comments': comments, 'article': article})
+    return render_to_response('article.html', c)
 
 
 def register(request):

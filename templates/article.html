@@ -10,5 +10,10 @@
     {% for comment in comments %}
             <p>{{ comment.4}}</p>
     {% endfor %}
+    <form accept-charset="UTF-8" role="form" method="post">
+        {% csrf_token %}
+        <textarea type="text" name="comment"></textarea>
+        <p><input type="submit" value="Add"></p>
+    </form>
 </body>
 </html>
