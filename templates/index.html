@@ -6,32 +6,74 @@
     <title></title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap-dropdown.js">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
+{% block navbar %}
+    <div class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Имя проекта</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li><a href="/">На главную</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user_name == 'anonim' %}
+                        <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                        <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    {% else %}
+                        <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Hello, {{ user_name }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Room</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/exit">Exit</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block header %}
     <div class="blog-header">
         <div class="container">
             <h1 class="blog-title">{{ header }}</h1>
+
+            <h1 class="us"></h1>
         </div>
     </div>
+{% endblock %}
+{% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-sm-8 blog-main">
+            <div class="col-sm-6 col-sm-offset-3 blog-main">
                 <div class="blog-post">
-                {% for article in news %}
-                    <h2 class="blog-post-title">
-                        <a href="/article/get/{{ article.0 }}">
-                             {{ article.2}}
-                        </a></h2>
-                    <p class="blog-post-meta">
-                        January 1, 2014 by
-                        <a href="#">Vadya</a>
-                    </p>
-                    <p>{{ article.1 }}</p>
-                    <hr>
-                {% endfor %}
-            </div>
+                    {% for article in news %}
+                        <h2 class="blog-post-title">
+                            <a href="/article/get/{{ article.0 }}">
+                                {{ article.2 }}
+                            </a></h2>
+                        <p class="blog-post-meta">
+                            January 1, 2014 by
+                            <a href="#">Vadya</a>
+                        </p>
+                        <p>{{ article.1 }}</p>
+                        <hr>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
 </body>
 </html>

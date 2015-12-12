@@ -5,6 +5,14 @@ from other.scripts import to_md5
 __author__ = 'vadik'
 
 
+def dictfetchall(cursor):
+    desc = cursor.description
+    return [
+        dict(zip([col[0] for col in desc], row))
+        for row in cursor.fetchall()
+        ]
+
+
 def has_login(user_name):
     cursor = connection.cursor()
     request = (
@@ -52,3 +60,29 @@ def get_news():
     cursor.execute('SELECT * FROM News')
     data = cursor.fetchall()
     return data
+
+
+def get_name_user(id):
+    cursor = connection.cursor()
+    sql_get_name = (
+        'SELECT User_name FROM Users WHERE User_id={user_id};'
+    ).format(user_id=id)
+    cursor.execute(sql_get_name)
+    data = cursor.fetchone()
+    print data
+    if data:
+        return data[0]
+    else:
+        return None
+
+
+def get_comments(article_id):
+    cursor = connection.cursor()
+    sql_get_comments = (
+        'SELECT Comments.*, Users.User_name FROM Comments INNER JOIN Users '
+        'ON News_id = {article_id} AND Users.User_id=Comments.User_id;'
+    ).format(article_id=article_id)
+    cursor.execute(sql_get_comments)
+    result = dictfetchall(cursor)
+    print result
+    return result

@@ -1,3 +1,4 @@
+{% extends "index.html" %}
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -5,15 +6,44 @@
     <title></title>
 </head>
 <body>
-    <h1>{{ article.2 }}</h1>
-    <h2>{{ article.1 }}</h2>
-    {% for comment in comments %}
-            <p>{{ comment.4}}</p>
-    {% endfor %}
-    <form accept-charset="UTF-8" role="form" method="post">
-        {% csrf_token %}
-        <textarea type="text" name="comment"></textarea>
-        <p><input type="submit" value="Add"></p>
-    </form>
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <h1>{{ article.2 }}</h1>
+
+                <h2>{{ article.1 }}</h2>
+                <hr>
+                <h4>Leave a Comment:</h4>
+
+                <form accept-charset="UTF-8" role="form" method="post">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <textarea name="comment" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+                <br><br>
+
+                <p><span class="badge">{{ comments|length }}</span> Comments:</p><br>
+
+                <div class="row">
+                    {% for comment in comments %}
+                        <div class="col-sm-9 col-sm-offset-1">
+                            <h4>{{ comment.User_name }}
+                                <small>{{ comment.Date_sent }}</small>
+                            </h4>
+                            <p>{{ comment.Text_cmt }}</p>
+                            <br><br>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
 </body>
 </html>

@@ -4,33 +4,42 @@ from django.shortcuts import render_to_response
 from django.db import connection
 from django.template.context_processors import csrf
 from sql_requests.insert import add_user, add_comment
-from sql_requests.select import has_login, verify_user, get_news
+from sql_requests.select import has_login, verify_user, get_news, get_name_user, get_comments
 
 
 def index(request):
     header = 'Header!'
-
+    user_id = request.session.get('user_id', None)
+    if user_id is None:
+        user_name = 'anonim'
+    else:
+        user_name = get_name_user(user_id)
     data = get_news()
-    return render_to_response('index.html', {'header': header, 'news': data})
+    return render_to_response('index.html', {'header': header, 'news': data, 'user_name': user_name})
 
 
 def article(request, article_id):
-
     errors = []
     c = {}
+    user_id = request.session.get('user_id', None)
+    if user_id is None:
+        user_name = 'anonim'
+    else:
+        user_name = get_name_user(user_id)
     if request.method == 'POST':
         data = request.POST
         if not data.get('comment', ''):
             errors.append('Write comment!')
-        user_id = list(request.COOKIES['user_id'][2])
-        add_comment(article_id, user_id[0], data['comment'])
+        # user_id = list(request.COOKIES['user_id'][2])
+        user_id = request.session['user_id']
+        add_comment(article_id, user_id, data['comment'])
 
-    #TODO rewrite request in sql_request/select.py
+    # TODO rewrite request in sql_request/select.py
     cursor = connection.cursor()
-    cursor.execute('SELECT * FROM Comments WHERE News_id = {};'.format(article_id))
-    c['comments'] = cursor.fetchall()
+    c['comments'] = get_comments(article_id)
     cursor.execute('SELECT * FROM News WHERE News_id = {};'.format(article_id))
     c['article'] = list(cursor.fetchall()[0])
+    c['user_name'] = user_name
     c.update(csrf(request))
 
     return render_to_response('article.html', c)
@@ -58,15 +67,14 @@ def register(request):
             add_user(data['login'], data['password'], data['email'])
             c['news'] = get_news()
             c['header'] = 'Header'
-            #TODO rewrite request in sql_request/select.py
-            #Get last user_id and set cookie
+            # TODO rewrite request in sql_request/select.py
+            # Get last user_id and set cookie
             cursor = connection.cursor()
             cursor.execute('SELECT MAX(user_id) FROM Users;')
-            user_id = cursor.fetchall()
+            user_id = cursor.fetchone()[0]
 
-            respons = render_to_response('index.html', c)
-            respons.set_cookie('user_id', user_id)
-            return respons
+            request.session['user_id'] = user_id
+            return HttpResponseRedirect('/', c)
     c['errors'] = errors
     return render_to_response('signUp.html', c)
 
@@ -90,16 +98,18 @@ def sign_in(request):
             # user is authorized
             c['news'] = get_news()
             c['header'] = 'Header'
-            #TODO rewrite request in sql_request/select.py
-            cursor = connection.cursor()
-            cursor.execute('SELECT User_id FROM Users WHERE Email = "{}";'.format(data['email']))
-            user_id = cursor.fetchall()
-
-            respons = render_to_response('index.html', c)
-            #Add user_id to cookie
-            respons.set_cookie('user_id', user_id)
-            return respons
+            # TODO rewrite request in sql_request/select.py
+            request.session['user_id'] = authorized_user_id
+            return HttpResponseRedirect('/', c)
         else:
             errors.append("The email you've entered doesn't match any account")
     c['errors'] = errors
     return render_to_response('signIn.html', c)
+
+
+def exit(request):
+    try:
+        del request.session['user_id']
+    except KeyError:
+        pass
+    return HttpResponseRedirect('/', get_news())

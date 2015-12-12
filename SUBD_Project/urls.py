@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^login', views.sign_in),
     url(r'^article/get/(?P<article_id>\d+)/$', views.article),
     #url(r'^my_page/$', views.my_page),
+    url(r'^exit', views.exit),
 ]
