@@ -11,7 +11,7 @@ CREATE TABLE Comments
         Comment_id integer  NOT NULL ,
         News_id integer  NOT NULL ,
         User_id integer  NOT NULL ,
-        Date_sent datetime  NOT NULL ,
+        Date_sent VARCHAR(20) NOT NULL ,
         Text_cmt char(18)  NOT NULL,
         CONSTRAINT XPKComments PRIMARY KEY (Comment_id ASC)
 );
