@@ -10,10 +10,7 @@ from sql_requests.select import has_login, verify_user, get_news
 def index(request):
     header = 'Header!'
 
-    cursor = connection.cursor()
-    cursor.execute('SELECT * FROM News')
-    data = cursor.fetchall()
-
+    data = get_news()
     return render_to_response('index.html', {'header': header, 'news': data})
 
 
@@ -44,18 +41,22 @@ def register(request):
             errors.append('Write password!')
         if not data.get('password_confirmation', ''):
             errors.append('Confirm passowrd')
-        # try:
-        #     age = int(data.get('age', ''))
-        # except ValueError:
-        #     errors.append('Age must be number')
         if not errors:
             if data['password'] == data['password_confirmation']:
                 print data['password']
             print 'great'
             add_user(data['login'], data['password'], data['email'])
-            data = get_news()
-            return render_to_response('index.html',
-                                      {'header': 'Header', 'news': data})
+            c['news'] = get_news()
+            c['header'] = 'Header'
+            #TODO rewrite request in sql_request/select.py
+            #Get last user_id and set cookie
+            cursor = connection.cursor()
+            cursor.execute('SELECT MAX(user_id) FROM Users;')
+            user_id = cursor.fetchall()
+
+            respons = render_to_response('index.html', c)
+            respons.set_cookie('user_id', user_id)
+            return respons
     c['errors'] = errors
     return render_to_response('signUp.html', c)
 
@@ -77,9 +78,17 @@ def sign_in(request):
             return render_to_response('signIn.html', c)
         if authorized_user_id is not None:
             # user is authorized
-            data = get_news()
-            return render_to_response('index.html',
-                                      {'header': 'Header', 'news': data})
+            c['news'] = get_news()
+            c['header'] = 'Header'
+            #TODO rewrite request in sql_request/select.py
+            cursor = connection.cursor()
+            cursor.execute('SELECT User_id FROM Users WHERE Email = "{}";'.format(data['email']))
+            user_id = cursor.fetchall()
+
+            respons = render_to_response('index.html', c)
+            #Add user_id to cookie
+            respons.set_cookie('user_id', user_id)
+            return respons
         else:
             errors.append("The email you've entered doesn't match any account")
     c['errors'] = errors
