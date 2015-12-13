@@ -13,17 +13,18 @@
                 <h1>{{ article.2 }}</h1>
 
                 <h2>{{ article.1 }}</h2>
-                <hr>
-                <h4>Leave a Comment:</h4>
+                    <hr>
+                {% if user_name != None %}
+                    <h4>Leave a Comment:</h4>
+                    <form accept-charset="UTF-8" role="form" method="post">
+                        {% csrf_token %}
 
-                <form accept-charset="UTF-8" role="form" method="post">
-                    {% csrf_token %}
-
-                    <div class="form-group">
-                        <textarea name="comment" class="form-control" rows="3" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-success">Submit</button>
-                </form>
+                        <div class="form-group">
+                            <textarea name="comment" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </form>
+                {% endif %}
                 <br><br>
 
                 <p><span class="badge">{{ comments|length }}</span> Comments:</p><br>

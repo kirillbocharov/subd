@@ -23,7 +23,7 @@ def article(request, article_id):
     c = {}
     user_id = request.session.get('user_id', None)
     if user_id is None:
-        user_name = 'anonim'
+        user_name = None
     else:
         user_name = get_name_user(user_id)
     if request.method == 'POST':
