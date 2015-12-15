@@ -19,6 +19,10 @@ def index(request):
     data = get_news()
     return render_to_response('index.html', {'header': header, 'news': data, 'user_name': user_name})
 
+def my_page(request, user_name):
+    c = {}
+    c['user_name'] = user_name
+    return render_to_response('my_page.html', c)
 
 def article(request, article_id):
     errors = []
