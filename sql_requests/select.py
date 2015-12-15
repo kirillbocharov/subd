@@ -86,3 +86,29 @@ def get_comments(article_id):
     result = dictfetchall(cursor)
     print result
     return result
+
+
+def is_journalist(user_id):
+    cursor = connection.cursor()
+    sql_get_status_id = (
+        'SELECT Status_id FROM Users WHERE User_id={user_id};'
+    ).format(user_id=user_id)
+    cursor.execute(sql_get_status_id)
+    status_id = cursor.fetchone()[0]
+    if status_id == 2:
+        return True
+    else:
+        return False
+
+
+def is_left_like(article_id, user_id):
+    cursor = connection.cursor()
+    sql_get_like = (
+        'SELECT count() FROM Likes WHERE User_id={user_id} AND News_id={article_id};'
+    ).format(user_id=user_id, article_id=article_id)
+    cursor.execute(sql_get_like)
+    count = cursor.fetchone()[0]
+    if count == 0:
+        return False
+    else:
+        return True

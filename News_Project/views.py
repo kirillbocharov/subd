@@ -3,15 +3,17 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.db import connection
 from django.template.context_processors import csrf
-from sql_requests.insert import add_user, add_comment
-from sql_requests.select import has_login, verify_user, get_news, get_name_user, get_comments
+from sql_requests.insert import add_user, add_comment, add_like_sql
+from sql_requests.select import has_login, verify_user, get_news, get_name_user, get_comments, is_journalist, \
+    is_left_like
+from sql_requests.update import inc_numbers_like, inc_numbers_like_journalist
 
 
 def index(request):
     header = 'Header!'
     user_id = request.session.get('user_id', None)
     if user_id is None:
-        user_name = 'anonim'
+        user_name = None
     else:
         user_name = get_name_user(user_id)
     data = get_news()
@@ -62,19 +64,19 @@ def register(request):
             errors.append('Confirm passowrd')
         if not errors:
             if data['password'] == data['password_confirmation']:
-                print data['password']
-            print 'great'
-            add_user(data['login'], data['password'], data['email'])
-            c['news'] = get_news()
-            c['header'] = 'Header'
-            # TODO rewrite request in sql_request/select.py
-            # Get last user_id and set cookie
-            cursor = connection.cursor()
-            cursor.execute('SELECT MAX(user_id) FROM Users;')
-            user_id = cursor.fetchone()[0]
+                add_user(data['login'], data['password'], data['email'])
+                c['news'] = get_news()
+                c['header'] = 'Header'
+                # TODO rewrite request in sql_request/select.py
+                # Get last user_id and set cookie
+                cursor = connection.cursor()
+                cursor.execute('SELECT MAX(user_id) FROM Users;')
+                user_id = cursor.fetchone()[0]
 
-            request.session['user_id'] = user_id
-            return HttpResponseRedirect('/', c)
+                request.session['user_id'] = user_id
+                return HttpResponseRedirect('/', c)
+            else:
+                errors.append("Passwords didn't match.")
     c['errors'] = errors
     return render_to_response('signUp.html', c)
 
@@ -113,3 +115,17 @@ def exit(request):
     except KeyError:
         pass
     return HttpResponseRedirect('/', get_news())
+
+
+def add_like(request, article_id):
+    user_id = request.session.get('user_id', None)
+    if user_id is not None:
+        if not is_left_like(article_id, user_id):
+            add_like_sql(article_id, user_id)
+            if is_journalist(user_id):
+                inc_numbers_like_journalist(article_id)
+                inc_numbers_like(article_id)
+            else:
+                inc_numbers_like(article_id)
+    address = '/article/get/{article_id}'.format(article_id=article_id)
+    return HttpResponseRedirect(address)

@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^register/$', views.register),
     url(r'^login', views.sign_in),
     url(r'^article/get/(?P<article_id>\d+)/$', views.article),
+    url(r'^article/add_like/(?P<article_id>\d+)/$', views.add_like),
     #url(r'^my_page/$', views.my_page),
     url(r'^exit', views.exit),
 ]

@@ -22,7 +22,7 @@
                     <li><a href="#">Your link</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    {% if user_name == 'anonim' %}
+                    {% if user_name == None %}
                         <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                         <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     {% else %}

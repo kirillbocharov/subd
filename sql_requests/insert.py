@@ -30,3 +30,15 @@ def add_comment(news_id, user_id, comment):
         comment=comment,
     )
     cursor.execute(request)
+
+
+def add_like_sql(article_id, user_id):
+    cursor = connection.cursor()
+    request = (
+        'INSERT INTO Likes(News_id, User_id) '
+        'VALUES({article_id}, {user_id});'
+    ).format(
+        article_id=article_id,
+        user_id=user_id
+    )
+    cursor.execute(request)

@@ -11,12 +11,12 @@ INSERT INTO Statuses(Name) VALUES("Child");
 INSERT INTO Statuses(Name) VALUES("Journalist");
 
 
-INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Vadik", "pass", 19, 1, "email@email.com");
-INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Dimas", "pass", 14, 1, "email@email.com");
-INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Nikita", "pass", 20, 1, "email@email.com");
-INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Petya", "pass", 22, 1, "email@email.com");
-INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Valera", "pass", 17, 2, "email@email.com");
-INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Boss", "pass", 187, 1, "email@email.com");
+INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Vadik", "abff60a7ffeadeb1a3da290147ee1fa7", 19, 2, "Vadik@email.com");
+INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Dimas", "8555f45b58e4806a1f68627339644129", 14, 2, "Dimas@email.com");
+INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Nikita", "189b518163ca2b8693e8dd77aa25126e", 20, 1, "Nikita@email.com");
+INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Petya", "189b518163ca2b8693e8dd77aa25126e", 22, 1, "Petya@email.com");
+INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Valera", "189b518163ca2b8693e8dd77aa25126e", 17, 2, "Valera@email.com");
+INSERT INTO Users(User_name, Password, Age, Status_id, Email) VALUES("Boss", "189b518163ca2b8693e8dd77aa25126e", 187, 1, "Boss@email.com");
 
 
 INSERT INTO Users_Roles(User_id, Role_id) VALUES(1, 1);
@@ -62,5 +62,3 @@ INSERT INTO News_Categories(News_id, Category_id) VALUES(1,1);
 INSERT INTO News_Categories(News_id, Category_id) VALUES(2,1);
 INSERT INTO News_Categories(News_id, Category_id) VALUES(3,2);
 INSERT INTO News_Categories(News_id, Category_id) VALUES(4,3);
-
-

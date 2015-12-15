@@ -52,7 +52,8 @@ CREATE TABLE News
         Text_news varchar(20)  NOT NULL ,
         Header varchar(20) NOT NULL,
         Foto varchar(20)  NOT NULL ,
-        Number_likes integer  NOT NULL ,
+        Number_likes integer  NOT NULL DEFAULT(0),
+        Number_likes_journalist integer  NOT NULL DEFAULT(0),
         User_id char(18)  NOT NULL,
         CONSTRAINT XPKNews PRIMARY KEY (News_id ASC)
         CONSTRAINT  User_write_news FOREIGN KEY (User_id) REFERENCES Users(User_id)
