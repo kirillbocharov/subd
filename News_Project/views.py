@@ -13,9 +13,9 @@ def index(request):
     c = {}
     user_id = request.session.get('user_id', None)
     if user_id is None:
-        c['user_id'] = None
+        c['user_name'] = None
     else:
-        c['user_id'] = get_name_user(user_id)
+        c['user_name'] = get_name_user(user_id)
     c['news'] = get_news()
     return render_to_response('index.html', c)
 
