@@ -80,7 +80,6 @@ def get_name_user(id):
     ).format(user_id=id)
     cursor.execute(sql_get_name)
     data = cursor.fetchone()
-    print data
     if data:
         return data[0]
     else:
@@ -95,7 +94,6 @@ def get_comments(article_id):
     ).format(article_id=article_id)
     cursor.execute(sql_get_comments)
     result = dictfetchall(cursor)
-    print result
     return result
 
 

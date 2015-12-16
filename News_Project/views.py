@@ -65,7 +65,6 @@ def register(request):
         data = request.POST
         if not data.get('login', ''):
             errors.append('Write login!')
-        print has_login(data.get('login', ''))
         if has_login(data.get('login', '')):
             errors.append('This login already exists')
         if not data.get('password', ''):
