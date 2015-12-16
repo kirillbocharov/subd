@@ -21,7 +21,9 @@
             </div>
             <div>
                 <ul class="nav navbar-nav">
-                    <li><a href="/user/{{ user_name }}">My page</a></li>
+                    {% if user_name != None %}
+                        <li><a href="/user/{{ user_name }}">My page</a></li>
+                    {% endif %}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if user_name == None %}
@@ -32,7 +34,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">Hello, {{ user_name }} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Room</a></li>
+                            <li><a href="/user/{{ user_name }}">Room</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/exit">Exit</a></li>
                         </ul>
