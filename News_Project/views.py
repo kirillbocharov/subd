@@ -31,7 +31,11 @@ def my_page(request, user_name):
             errors.append('Write news!')
         if not data.get('header', ''):
             errors.append('Write title!')
-        add_news(user_id, data['news'], data['header'])
+        if is_journalist(user_id):
+            is_sand = 0
+        else:
+            is_sand = 1
+        add_news(user_id, data['news'], data['header'], is_sand)
     c['user_name'] = user_name
     c['news'] = get_news_by_name(user_name)
     return render_to_response('my_page.html', c)
