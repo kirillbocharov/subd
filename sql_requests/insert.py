@@ -16,6 +16,19 @@ def add_user(user_name, password, email, status_id=1):
         email=email)
     cursor.execute(request)
 
+def add_news(user_id, news, header):
+    cursor = connection.cursor()
+    request = (
+        'INSERT INTO News(Text_news, Header, Foto, Number_likes, User_id) '
+        'VALUES("{text_news}", "{header}", "{foto}", "{number_likes}", "{user_id}");'
+    ).format(
+        text_news=news,
+        header=header,
+        foto="Url Foto",
+        number_likes=0,
+        user_id=user_id,
+    )
+    cursor.execute(request)
 
 def add_comment(news_id, user_id, comment):
     cursor = connection.cursor()

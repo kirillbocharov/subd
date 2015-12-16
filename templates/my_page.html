@@ -8,17 +8,30 @@
 <body>
 {% block content %}
     {{ user_name }}
+
+    <h4>Add News:</h4>
+        <form accept-charset="UTF-8" role="form" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <textarea name="header" class="form-control" rows="1" required></textarea>
+            </div>
+            <div class="form-group">
+                <textarea name="news" class="form-control" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+
+    {% for article in news %}
+        <h2 class="blog-post-title">
+        <a href="/article/get/{{ article.0 }}">
+            {{ article.2 }}
+        </a></h2>
+        <p class="blog-post-meta">
+        January 1, 2014 by
+        </p>
+        <p>{{ article.1 }}</p>
+        <hr>
+    {% endfor %}
 {% endblock %}
-{% for article in news %}
-    <h2 class="blog-post-title">
-    <a href="/article/get/{{ article.0 }}">
-        {{ article.2 }}
-    </a></h2>
-    <p class="blog-post-meta">
-    January 1, 2014 by
-    </p>
-    <p>{{ article.1 }}</p>
-    <hr>
-{% endfor %}
 </body>
 </html>
