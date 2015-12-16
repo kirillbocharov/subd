@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.db import connection
 from django.template.context_processors import csrf
-from sql_requests.insert import add_user, add_comment, add_like_sql
+from sql_requests.insert import add_user, add_comment, add_like_sql, add_news
 from sql_requests.select import has_login, verify_user, get_news, get_name_user, get_comments, is_journalist, \
     is_left_like, get_news_by_name, get_childs_articles, get_numlikes_journ, get_owner_article, get_article
 from sql_requests.update import inc_numbers_like, inc_numbers_like_journalist, make_journalist
@@ -22,9 +22,18 @@ def index(request):
 
 def my_page(request, user_name):
     c = {}
+    errors = []
+    c.update(csrf(request))
+    user_id = request.session.get('user_id', None)
+    if request.method == 'POST':
+        data = request.POST
+        if not data.get('news', ''):
+            errors.append('Write news!')
+        if not data.get('header', ''):
+            errors.append('Write title!')
+        add_news(user_id, data['news'], data['header'])
     c['user_name'] = user_name
     c['news'] = get_news_by_name(user_name)
-    print(c['news'])
     return render_to_response('my_page.html', c)
 
 
