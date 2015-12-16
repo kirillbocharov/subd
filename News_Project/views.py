@@ -10,14 +10,14 @@ from sql_requests.update import inc_numbers_like, inc_numbers_like_journalist
 
 
 def index(request):
-    header = 'Header!'
+    c = {}
     user_id = request.session.get('user_id', None)
     if user_id is None:
-        user_name = None
+        c['user_id'] = None
     else:
-        user_name = get_name_user(user_id)
-    data = get_news()
-    return render_to_response('index.html', {'header': header, 'news': data, 'user_name': user_name})
+        c['user_id'] = get_name_user(user_id)
+    c['news'] = get_news()
+    return render_to_response('index.html', c)
 
 def my_page(request, user_name):
     c = {}
