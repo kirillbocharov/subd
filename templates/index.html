@@ -64,14 +64,14 @@
                 <div class="blog-post">
                     {% for article in news %}
                         <h2 class="blog-post-title">
-                            <a href="/article/get/{{ article.0 }}">
-                                {{ article.2 }}
+                            <a href="/article/get/{{ article.News_id }}">
+                                {{ article.Header }}
                             </a></h2>
                         <p class="blog-post-meta">
                             January 1, 2014 by
                             <a href="#">Vadya</a>
                         </p>
-                        <p>{{ article.1 }}</p>
+                        <p>{{ article.Text_news }}</p>
                         <hr>
                     {% endfor %}
                 </div>

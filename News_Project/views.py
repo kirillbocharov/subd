@@ -5,7 +5,7 @@ from django.db import connection
 from django.template.context_processors import csrf
 from sql_requests.insert import add_user, add_comment, add_like_sql
 from sql_requests.select import has_login, verify_user, get_news, get_name_user, get_comments, is_journalist, \
-    is_left_like, get_news_by_name, get_childs_articles, get_numlikes_journ, get_owner_article
+    is_left_like, get_news_by_name, get_childs_articles, get_numlikes_journ, get_owner_article, get_article
 from sql_requests.update import inc_numbers_like, inc_numbers_like_journalist, make_journalist
 
 
@@ -47,10 +47,8 @@ def article(request, article_id):
         add_comment(article_id, user_id, data['comment'])
 
     # TODO rewrite request in sql_request/select.py
-    cursor = connection.cursor()
     c['comments'] = get_comments(article_id)
-    cursor.execute('SELECT * FROM News WHERE News_id = {};'.format(article_id))
-    c['article'] = list(cursor.fetchall()[0])
+    c['article'] = get_article(article_id)
     c['user_name'] = user_name
     c.update(csrf(request))
 

@@ -12,6 +12,13 @@ def dictfetchall(cursor):
         for row in cursor.fetchall()
         ]
 
+def dictfetcone(cursor):
+    desc = cursor.description
+    result = dict(zip([col[0] for col in desc], cursor.fetchone()))
+
+    print result
+    return result
+
 
 def has_login(user_name):
     cursor = connection.cursor()
@@ -57,9 +64,8 @@ def verify_user(email, password):
 
 def get_news():
     cursor = connection.cursor()
-    cursor.execute('SELECT * FROM News')
-    data = cursor.fetchall()
-    return data
+    cursor.execute('SELECT * FROM News WHERE Is_sand=0')
+    return dictfetchall(cursor)
 
 
 def get_news_by_name(user_name):
@@ -123,14 +129,23 @@ def is_left_like(article_id, user_id):
         return True
 
 
+# def get_childs_articles():
+#     cursor = connection.cursor()
+#     sql = (
+#         'SELECT News.* FROM News INNER JOIN Users ON '
+#         'News.User_id=Users.User_id AND Users.Status_id=1;'
+#     )
+#     cursor.execute(sql)
+#     return cursor.fetchall()
+
+
 def get_childs_articles():
     cursor = connection.cursor()
     sql = (
-        'SELECT News.* FROM News INNER JOIN Users ON '
-        'News.User_id=Users.User_id AND Users.Status_id=1;'
+        'SELECT * FROM News WHERE Is_sand=1'
     )
     cursor.execute(sql)
-    return cursor.fetchall()
+    return dictfetchall(cursor)
 
 
 def get_numlikes_journ(user_id):
@@ -150,3 +165,12 @@ def get_owner_article(article_id):
     ).format(article_id=article_id)
     cursor.execute(sql)
     return cursor.fetchone()[0]
+
+
+def get_article(article_id):
+    cursor = connection.cursor()
+    sql = (
+        'SELECT * FROM News WHERE News_id = {article_id};'
+    ).format(article_id=article_id)
+    cursor.execute(sql)
+    return dictfetcone(cursor)
