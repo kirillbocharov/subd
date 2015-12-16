@@ -61,6 +61,13 @@ def get_news():
     data = cursor.fetchall()
     return data
 
+def get_news_by_name(user_name):
+    cursor = connection.cursor()
+    cursor.execute(
+        'SELECT * FROM News, Users WHERE News.User_id in (SELECT User_id FROM Users WHERE User_name={user_name});'
+    ).format(user_name=user_name)
+    data = cursor.fetchall()
+    return data
 
 def get_name_user(id):
     cursor = connection.cursor()

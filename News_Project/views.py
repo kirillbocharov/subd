@@ -5,7 +5,7 @@ from django.db import connection
 from django.template.context_processors import csrf
 from sql_requests.insert import add_user, add_comment, add_like_sql
 from sql_requests.select import has_login, verify_user, get_news, get_name_user, get_comments, is_journalist, \
-    is_left_like
+    is_left_like, get_news_by_name
 from sql_requests.update import inc_numbers_like, inc_numbers_like_journalist
 
 
@@ -22,6 +22,8 @@ def index(request):
 def my_page(request, user_name):
     c = {}
     c['user_name'] = user_name
+    c['news'] = get_news_by_name(user_name)
+    print(c['news'])
     return render_to_response('my_page.html', c)
 
 def article(request, article_id):
