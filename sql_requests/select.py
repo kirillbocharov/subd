@@ -71,7 +71,7 @@ def get_news():
 def get_news_by_name(user_name):
     cursor = connection.cursor()
     sql_request = (
-        'SELECT * FROM News, Users WHERE News.User_id in '
+        'SELECT * FROM News WHERE News.User_id in '
         '(SELECT User_id FROM Users WHERE User_name="{user_name}");'
     ).format(user_name=user_name)
     cursor.execute(sql_request)
