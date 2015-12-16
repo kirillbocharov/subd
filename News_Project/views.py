@@ -5,7 +5,7 @@ from django.db import connection
 from django.template.context_processors import csrf
 from sql_requests.insert import add_user, add_comment, add_like_sql
 from sql_requests.select import has_login, verify_user, get_news, get_name_user, get_comments, is_journalist, \
-    is_left_like, get_news_by_name
+    is_left_like, get_news_by_name, get_childs_articles
 from sql_requests.update import inc_numbers_like, inc_numbers_like_journalist
 
 
@@ -19,6 +19,7 @@ def index(request):
     c['news'] = get_news()
     return render_to_response('index.html', c)
 
+
 def my_page(request, user_name):
     c = {}
     c['user_name'] = user_name
@@ -26,10 +27,13 @@ def my_page(request, user_name):
     print(c['news'])
     return render_to_response('my_page.html', c)
 
+
 def article(request, article_id):
     errors = []
     c = {}
     user_id = request.session.get('user_id', None)
+    # request.session['name']
+
     if user_id is None:
         user_name = None
     else:
@@ -135,3 +139,15 @@ def add_like(request, article_id):
                 inc_numbers_like(article_id)
     address = '/article/get/{article_id}'.format(article_id=article_id)
     return HttpResponseRedirect(address)
+
+
+def sandbox(request):
+    data = {}
+    user_id = request.session.get('user_id', None)
+    if user_id is None:
+        user_name = None
+    else:
+        user_name = get_name_user(user_id)
+    data['news'] = get_childs_articles()
+    data['user_name'] = user_name
+    return render_to_response('sandbox.html', data)

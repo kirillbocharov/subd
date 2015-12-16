@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^article/add_like/(?P<article_id>\d+)/$', views.add_like),
     url(r'^user/(?P<user_name>\w+)/$', views.my_page),
     url(r'^exit', views.exit),
+    url(r'^sandbox', views.sandbox),
 ]

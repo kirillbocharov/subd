@@ -61,13 +61,17 @@ def get_news():
     data = cursor.fetchall()
     return data
 
+
 def get_news_by_name(user_name):
     cursor = connection.cursor()
-    cursor.execute(
-        'SELECT * FROM News, Users WHERE News.User_id in (SELECT User_id FROM Users WHERE User_name={user_name});'
+    sql_request = (
+        'SELECT * FROM News, Users WHERE News.User_id in '
+        '(SELECT User_id FROM Users WHERE User_name="{user_name}");'
     ).format(user_name=user_name)
+    cursor.execute(sql_request)
     data = cursor.fetchall()
     return data
+
 
 def get_name_user(id):
     cursor = connection.cursor()
@@ -119,3 +123,12 @@ def is_left_like(article_id, user_id):
         return False
     else:
         return True
+
+
+def get_childs_articles():
+    cursor = connection.cursor()
+    sql = (
+        'SELECT News.* FROM News INNER JOIN Users ON News.User_id=Users.User_id AND Users.Status_id=1;'
+    )
+    cursor.execute(sql)
+    return cursor.fetchall()
