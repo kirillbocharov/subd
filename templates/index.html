@@ -1,4 +1,6 @@
+{% load static %}
 {% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,10 +21,10 @@
             </div>
             <div>
                 <ul class="nav navbar-nav">
-                    <li><a href="/user/{{ user_name }}">My page</a></li>
+                    <li><a href="#">Your link</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    {% if user_name == None %}
+                    {% if user_name == 'anonim' %}
                         <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                         <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     {% else %}
