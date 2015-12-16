@@ -16,8 +16,10 @@
                 <h2 class="blog-post-title">{{ article.2 }}</h2>
 
                 <p>{{ article.1 }}</p>
-                <a href="/article/add_like/{{ article.0 }}/"><img src="{% static 'images/likeButton.png' %}" width="30" height="30 "></a>
-                <p>{{ article.4 }}</p>
+                <a href="/article/add_like/{{ article.0 }}/"><img src="{% static 'images/likeButton.png' %}" width="30"
+                                                                  height="30 "></a>
+                <span class="label label-primary">{{ article.4 }}</span>
+                <span class="label label-success">{{ article.5 }}</span>
                 <hr>
                 {% if user_name != None %}
                     <h4>Leave a Comment:</h4>
