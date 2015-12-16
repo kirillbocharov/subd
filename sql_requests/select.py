@@ -126,7 +126,27 @@ def is_left_like(article_id, user_id):
 def get_childs_articles():
     cursor = connection.cursor()
     sql = (
-        'SELECT News.* FROM News INNER JOIN Users ON News.User_id=Users.User_id AND Users.Status_id=1;'
+        'SELECT News.* FROM News INNER JOIN Users ON '
+        'News.User_id=Users.User_id AND Users.Status_id=1;'
     )
     cursor.execute(sql)
     return cursor.fetchall()
+
+
+def get_numlikes_journ(user_id):
+    cursor = connection.cursor()
+    sql = (
+        'SELECT sum(News.Number_likes_journalist) FROM Users INNER JOIN News '
+        'ON Users.User_id = News.User_id AND Users.User_id = {user_id};'
+    ).format(user_id=user_id)
+    cursor.execute(sql)
+    return cursor.fetchone()[0]
+
+
+def get_owner_article(article_id):
+    cursor = connection.cursor()
+    sql = (
+        'SELECT User_id FROM News WHERE News_id = {article_id}; '
+    ).format(article_id=article_id)
+    cursor.execute(sql)
+    return cursor.fetchone()[0]

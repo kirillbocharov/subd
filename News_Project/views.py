@@ -5,8 +5,8 @@ from django.db import connection
 from django.template.context_processors import csrf
 from sql_requests.insert import add_user, add_comment, add_like_sql
 from sql_requests.select import has_login, verify_user, get_news, get_name_user, get_comments, is_journalist, \
-    is_left_like, get_news_by_name, get_childs_articles
-from sql_requests.update import inc_numbers_like, inc_numbers_like_journalist
+    is_left_like, get_news_by_name, get_childs_articles, get_numlikes_journ, get_owner_article
+from sql_requests.update import inc_numbers_like, inc_numbers_like_journalist, make_journalist
 
 
 def index(request):
@@ -134,6 +134,10 @@ def add_like(request, article_id):
             if is_journalist(user_id):
                 inc_numbers_like_journalist(article_id)
                 inc_numbers_like(article_id)
+                owner_article = get_owner_article(article_id)
+                number_likes = get_numlikes_journ(owner_article)
+                if number_likes > 0:
+                    make_journalist(owner_article)
             else:
                 inc_numbers_like(article_id)
     address = '/article/get/{article_id}'.format(article_id=article_id)
