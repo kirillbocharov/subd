@@ -1,5 +1,6 @@
 {% load static %}
 {% load staticfiles %}
+{% load my_filter %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -69,7 +70,7 @@
                             </a></h2>
                         <p class="blog-post-meta">
                             January 1, 2014 by
-                            <a href="#">Vadya</a>
+                            <a href="#">{{ article.User_id|get_name_by_id }}</a>
                         </p>
                         <p>{{ article.Text_news }}</p>
                         <hr>
