@@ -52,6 +52,7 @@ CREATE TABLE News
         Text_news varchar(20)  NOT NULL ,
         Header varchar(20) NOT NULL,
         Foto varchar(20)  NOT NULL ,
+        Date_sent VARCHAR(20) NOT NULL ,
         Is_sand INTEGER NOT  NULL ,
         Number_likes integer  NOT NULL DEFAULT(0),
         Number_likes_journalist integer  NOT NULL DEFAULT(0),

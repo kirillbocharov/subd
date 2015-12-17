@@ -69,7 +69,7 @@
                                 {{ article.Header }}
                             </a></h2>
                         <p class="blog-post-meta">
-                            January 1, 2014 by
+                            {{ article.Date_sent }} by
                             <a href="#">{{ article.User_id|get_name_by_id }}</a>
                         </p>
                         <p>{{ article.Text_news }}</p>

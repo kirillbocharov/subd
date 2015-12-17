@@ -1,6 +1,7 @@
 {% extends "index.html" %}
 {% load static %}
 {% load staticfiles %}
+{% load my_filter %}
 
 <!DOCTYPE html>
 <html>
@@ -15,9 +16,15 @@
             <div class="col-sm-9 col-sm-offset-1">
                 <h2 class="blog-post-title">{{ article.Header }}</h2>
 
+                <p class="blog-post-meta">
+                    {{ article.Date_sent }} by
+                    <a href="#">{{ article.User_id|get_name_by_id }}</a>
+                </p>
+
                 <p>{{ article.Text_news }}</p>
-                <a href="/article/add_like/{{ article.News_id }}/"><img src="{% static 'images/likeButton.png' %}" width="30"
-                                                                  height="30 "></a>
+                <a href="/article/add_like/{{ article.News_id }}/"><img src="{% static 'images/likeButton.png' %}"
+                                                                        width="30"
+                                                                        height="30 "></a>
                 <span class="label label-primary">{{ article.Number_likes }}</span>
                 {% if article.Is_sand == 1 %}
                     <span class="label label-success">{{ article.Number_likes_journalist }}</span>

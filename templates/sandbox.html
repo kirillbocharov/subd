@@ -1,9 +1,10 @@
 {% extends 'index.html' %}
+{% load my_filter %}
 {% block title %}
     Sandbox
 {% endblock %}
 {% block content %}
-     <div class="container">
+    <div class="container">
         <div class="row">
             <div class="col-sm-9 col-sm-offset-1 blog-main">
                 <div class="blog-post">
@@ -13,8 +14,8 @@
                                 {{ article.Header }}
                             </a></h2>
                         <p class="blog-post-meta">
-                            January 1, 2014 by
-                            <a href="#">Vadya</a>
+                            {{ article.Date_sent }} by
+                            <a href="#">{{ article.User_id|get_name_by_id }}</a>
                         </p>
                         <p>{{ article.Text_news }}</p>
                         <hr>

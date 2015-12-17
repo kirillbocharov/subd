@@ -19,6 +19,13 @@ def dictfetcone(cursor):
     print result
     return result
 
+def dictfetconeone(cursor):
+    desc = cursor.description
+    result = dict(zip([col[0] for col in desc], cursor.fetchone()))
+
+    print result
+    return result
+
 
 def has_login(user_name):
     cursor = connection.cursor()
@@ -75,8 +82,8 @@ def get_news_by_name(user_name):
         '(SELECT User_id FROM Users WHERE User_name="{user_name}");'
     ).format(user_name=user_name)
     cursor.execute(sql_request)
-    data = cursor.fetchall()
-    return data
+    # data = cursor.fetchall()
+    return dictfetchall(cursor)
 
 
 def get_name_user(id):

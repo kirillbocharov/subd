@@ -19,10 +19,12 @@ def add_user(user_name, password, email, status_id=1):
 
 def add_news(user_id, news, header, is_sand):
     cursor = connection.cursor()
+    date_str = datetime.now().strftime('%b %d, %Y, %I:%M %p')
     request = (
-        'INSERT INTO News(Is_sand, Text_news, Header, Foto, Number_likes, User_id) '
-        'VALUES("{is_sand}", "{text_news}", "{header}", "{foto}", "{number_likes}", "{user_id}");'
+        'INSERT INTO News(Date_sent, Is_sand, Text_news, Header, Foto, Number_likes, User_id) '
+        'VALUES("{date_sent}", "{is_sand}", "{text_news}", "{header}", "{foto}", "{number_likes}", "{user_id}");'
     ).format(
+        date_sent=date_str,
         is_sand=is_sand,
         text_news=news,
         header=header,
