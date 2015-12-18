@@ -4,27 +4,29 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-9 col-sm-offset-1">
-                <h4>Add News:</h4>
-
-                <form accept-charset="UTF-8" role="form" method="post">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <textarea name="header" class="form-control" rows="1" placeholder="Header" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <textarea name="news" class="form-control" rows="6" placeholder="Text article" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-success">Submit</button>
-                </form>
-
+                {% if cur_user == user_name %}
+                    <h4>Add News:</h4>
+                    <form accept-charset="UTF-8" role="form" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <textarea name="header" class="form-control" rows="1" placeholder="Header"
+                                      required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="news" class="form-control" rows="6" placeholder="Text article"
+                                      required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </form>
+                {% endif %}
                 {% for article in news %}
                     <h2 class="blog-post-title">
                         <a href="/article/get/{{ article.News_id }}">
                             {{ article.Header }}
                         </a></h2>
                     <p class="blog-post-meta">
-                         {{ article.Date_sent }} by
-                    <a href="#">{{ article.User_id|get_name_by_id }}</a>
+                        {{ article.Date_sent }} by
+                        <a href="#">{{ article.User_id|get_name_by_id }}</a>
                     </p>
                     <p>{{ article.Text_news }}</p>
                     <hr>

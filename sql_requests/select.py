@@ -12,14 +12,8 @@ def dictfetchall(cursor):
         for row in cursor.fetchall()
         ]
 
+
 def dictfetcone(cursor):
-    desc = cursor.description
-    result = dict(zip([col[0] for col in desc], cursor.fetchone()))
-
-    print result
-    return result
-
-def dictfetconeone(cursor):
     desc = cursor.description
     result = dict(zip([col[0] for col in desc], cursor.fetchone()))
 

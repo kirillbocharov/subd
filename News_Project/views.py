@@ -25,6 +25,7 @@ def my_page(request, user_name):
     errors = []
     c.update(csrf(request))
     user_id = request.session.get('user_id', None)
+    cur_user = get_name_user(user_id)
     if request.method == 'POST':
         data = request.POST
         if not data.get('news', ''):
@@ -38,6 +39,7 @@ def my_page(request, user_name):
         add_news(user_id, data['news'], data['header'], is_sand)
     c['user_name'] = user_name
     c['news'] = get_news_by_name(user_name)
+    c['cur_user'] = cur_user
     return render_to_response('my_page.html', c)
 
 
