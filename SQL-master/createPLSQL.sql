@@ -1,7 +1,7 @@
 CREATE TABLE Categories
 (
         Category_id NUMBER  NOT NULL ,
-        Name varchar2(20)  NOT NULL,
+        Name varchar2(200)  NOT NULL,
         CONSTRAINT XPKCategory PRIMARY KEY (Category_id)
 );
 /
@@ -13,7 +13,7 @@ CREATE TABLE Comments
         News_id NUMBER  NOT NULL ,
         User_id NUMBER  NOT NULL ,
         Date_sent VARCHAR2(20) NOT NULL ,
-        Text_cmt char(18)  NOT NULL,
+        Text_cmt char(1000)  NOT NULL,
         CONSTRAINT XPKComments PRIMARY KEY (Comment_id)
 );
 /
@@ -50,9 +50,9 @@ CREATE TABLE Logs
 CREATE TABLE News
 (
         News_id NUMBER NOT NULL ,
-        Text_news varchar2(20) NOT NULL ,
-        Header varchar2(20) NOT NULL,
-        Foto varchar2(20) NOT NULL ,
+        Text_news varchar2(3000) NOT NULL ,
+        Header varchar2(500) NOT NULL,
+        Foto varchar2(200) NOT NULL ,
         Date_sent VARCHAR2(20) NOT NULL ,
         Is_sand NUMBER NOT NULL ,
         Number_likes NUMBER NOT NULL,
@@ -93,7 +93,7 @@ CREATE TABLE News_Comments
 CREATE TABLE Roles
 (
         Role_id NUMBER  NOT NULL ,
-        Name varchar2(20)  NOT NULL,
+        Name varchar2(100)  NOT NULL,
         CONSTRAINT XPKRoles PRIMARY KEY (Role_id)
 );
 /
@@ -111,9 +111,9 @@ CREATE TABLE Statuses
 CREATE TABLE Users
 (
         User_id NUMBER NOT NULL,
-        User_name varchar2(20)  NOT NULL ,
-        Password varchar2(20)  NOT NULL ,
-        Email varchar2(20)  NOT NULL,
+        User_name varchar2(100)  NOT NULL ,
+        Password varchar2(500)  NOT NULL ,
+        Email varchar2(100)  NOT NULL,
         Age NUMBER  NULL,
         Status_id NUMBER  NOT NULL,
         CONSTRAINT XPKUser PRIMARY KEY (User_id),
