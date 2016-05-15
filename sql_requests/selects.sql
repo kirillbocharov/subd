@@ -113,5 +113,23 @@ AS
 BEGIN
 	SELECT SUM(N.Number_likes_journalist) INTO p_out_value FROM USERS U INNER JOIN NEWS N 
 		ON U.User_id = N.User_id AND U.User_id = p_user_id; 
-END GET_NUMLIKES_JOURN
+END GET_NUMLIKES_JOURN;
+
+
+CREATE OR REPLACE PROCEDURE GET_OWNER_ARTICLE(
+	p_article_id IN NUMBER, 
+	p_out_user_id OUT NUMBER)
+AS
+BEGIN
+	SELECT User_id INTO p_out_user_id FROM NEWS WHERE News_id = p_article_id;
+END GET_OWNER_ARTICLE;
+
+
+CREATE OR REPLACE PROCEDURE GET_ARTICLE(
+	p_article_id IN NUMBER,
+	p_out_cursor OUT sys_refcursor)
+AS
+BEGIN
+	OPEN p_out_cursor FOR SELECT * FROM NEWS WHERE News_id = p_article_id;
+END GET_ARTICLE;
 
