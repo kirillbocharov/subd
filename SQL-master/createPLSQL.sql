@@ -56,7 +56,7 @@ CREATE TABLE News
         Date_sent VARCHAR2(20) NOT NULL ,
         Is_sand NUMBER NOT NULL ,
         Number_likes NUMBER NOT NULL,
-        Number_likes_journalist NUMBER NOT NULL,
+        Number_likes_journalist NUMBER NOT NULL, DEFAULT(0)
         User_id NUMBER NOT NULL,
         CONSTRAINT XPKNews PRIMARY KEY (News_id),
         CONSTRAINT User_write_news FOREIGN KEY (User_id) REFERENCES Users(User_id)
