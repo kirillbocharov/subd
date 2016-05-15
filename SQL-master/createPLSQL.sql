@@ -25,8 +25,10 @@ CREATE TABLE Likes
         News_id NUMBER  NOT NULL ,
         User_id NUMBER  NOT NULL,
         CONSTRAINT XPKLike PRIMARY KEY (Like_id),
-        CONSTRAINT  News_has_like FOREIGN KEY (News_id) REFERENCES News(News_id),
+        CONSTRAINT  News_has_like FOREIGN KEY (News_id) REFERENCES News(News_id)
+        ON DELETE CASCADE,
         CONSTRAINT  User_put_like FOREIGN KEY (User_id) REFERENCES Users(User_id)
+        ON DELETE CASCADE
 
 );
 /
@@ -40,6 +42,7 @@ CREATE TABLE Logs
         User_id NUMBER  NOT NULL,
         CONSTRAINT XPKLogs PRIMARY KEY (Log_id),
         CONSTRAINT  User_put_log FOREIGN KEY (User_id) REFERENCES Users(User_id)
+        ON DELETE CASCADE
 );
 /
 
@@ -57,6 +60,7 @@ CREATE TABLE News
         User_id NUMBER NOT NULL,
         CONSTRAINT XPKNews PRIMARY KEY (News_id),
         CONSTRAINT User_write_news FOREIGN KEY (User_id) REFERENCES Users(User_id)
+        ON DELETE CASCADE
 );
 /
 
@@ -65,8 +69,10 @@ CREATE TABLE News_Categories
         Category_id NUMBER  NOT NULL ,
         News_id NUMBER  NOT NULL,
         CONSTRAINT XPKNews_Categories PRIMARY KEY (Category_id,News_id),
-        CONSTRAINT  Categories_News FOREIGN KEY (Category_id) REFERENCES Categories(Category_id),
+        CONSTRAINT  Categories_News FOREIGN KEY (Category_id) REFERENCES Categories(Category_id)
+        ON DELETE CASCADE,
         CONSTRAINT  News_Categories FOREIGN KEY (News_id) REFERENCES News(News_id)
+        ON DELETE CASCADE
 );
 /
 
@@ -76,8 +82,10 @@ CREATE TABLE News_Comments
         News_id NUMBER  NOT NULL ,
         Comment_id NUMBER  NOT NULL,
         CONSTRAINT XPKNews_Comments PRIMARY KEY (News_id,Comment_id),
-        CONSTRAINT  News_Comments FOREIGN KEY (News_id) REFERENCES News(News_id),
+        CONSTRAINT  News_Comments FOREIGN KEY (News_id) REFERENCES News(News_id)
+        ON DELETE CASCADE,
         CONSTRAINT  Comments_News FOREIGN KEY (Comment_id) REFERENCES Comments(Comment_id)
+        ON DELETE CASCADE
 );
 /
 
@@ -110,7 +118,6 @@ CREATE TABLE Users
         Status_id NUMBER  NOT NULL,
         CONSTRAINT XPKUser PRIMARY KEY (User_id),
         CONSTRAINT  User_has_status FOREIGN KEY (Status_id) REFERENCES Statuses(Status_id)
-
 );
 /
 
@@ -120,8 +127,10 @@ CREATE TABLE Users_Roles
         User_id NUMBER  NOT NULL ,
         Role_id NUMBER  NOT NULL ,
         CONSTRAINT XPKUsers_Roles PRIMARY KEY (User_id,Role_id),
-        CONSTRAINT  Users_Roles FOREIGN KEY (User_id) REFERENCES Users(User_id),
+        CONSTRAINT  Users_Roles FOREIGN KEY (User_id) REFERENCES Users(User_id)
+        ON DELETE CASCADE,
         CONSTRAINT  Roles_Users FOREIGN KEY (Role_id) REFERENCES Roles(Role_id)
+        ON DELETE CASCADE
 
 );
 /
