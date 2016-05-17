@@ -76,13 +76,39 @@ WSGI_APPLICATION = 'SUBD_Project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
+# DATABASES = {
+#     'default': {
+#     'ENGINE':   'django.db.backends.oracle',
+#     'USER':     'SYSTEM',
+#     'NAME' : 'XE',
+#     'PASSWORD': 'iLsa4vyR8eaxM',
+#     # 'db': 'XE'
+#   }
+# }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.oracle',
+#         'NAME': 'xe',
+#         'USER': 'vadik',
+#         'PASSWORD': 'iLsa4vyR8eax',
+#         'HOST': '',
+#         'PORT': '1521',
+#     }
+# }
+
+MY_DATABASE = {'host': "localhost",
+               'user': "vadik",
+               'passwd': "iLsa4vyR8eaxM",
+               'db': "XE"}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

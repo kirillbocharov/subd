@@ -65,14 +65,14 @@
                 <div class="blog-post">
                     {% for article in news %}
                         <h2 class="blog-post-title">
-                            <a href="/article/get/{{ article.News_id }}">
-                                {{ article.Header }}
+                            <a href="/article/get/{{ article.NEWS_ID }}">
+                                {{ article.HEADER }}
                             </a></h2>
                         <p class="blog-post-meta">
-                            {{ article.Date_sent }} by
-                            <a href="/user/{{ article.User_id|get_name_by_id }}">{{ article.User_id|get_name_by_id }}</a>
+                            {{ article.DATE_SENT }} by
+                            <a href="/user/{{ article.USER_ID|get_name_by_id }}">{{ article.USER_ID|get_name_by_id }}</a>
                         </p>
-                        <p>{{ article.Text_news }}</p>
+                        <p>{{ article.TEXT_NEWS }}</p>
                         <hr>
                     {% endfor %}
                 </div>

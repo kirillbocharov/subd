@@ -14,20 +14,20 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-9 col-sm-offset-1">
-                <h2 class="blog-post-title">{{ article.Header }}</h2>
+                <h2 class="blog-post-title">{{ article.HEADER }}</h2>
 
                 <p class="blog-post-meta">
-                    {{ article.Date_sent }} by
-                    <a href="#">{{ article.User_id|get_name_by_id }}</a>
+                    {{ article.DATA_SENT }} by
+                    <a href="#">{{ article.USER_ID|get_name_by_id }}</a>
                 </p>
 
                 <p>{{ article.Text_news }}</p>
-                <a href="/article/add_like/{{ article.News_id }}/"><img src="{% static 'images/likeButton.png' %}"
+                <a href="/article/add_like/{{ article.NEWS_ID }}/"><img src="{% static 'images/likeButton.png' %}"
                                                                         width="30"
                                                                         height="30 "></a>
-                <span class="label label-primary">{{ article.Number_likes }}</span>
-                {% if article.Is_sand == 1 %}
-                    <span class="label label-success">{{ article.Number_likes_journalist }}</span>
+                <span class="label label-primary">{{ article.NUMBER_LIKES }}</span>
+                {% if article.IS_SAND == 1 %}
+                    <span class="label label-success">{{ article.NUMBER_LIKES_JOURNALIST }}</span>
                 {% endif %}
                 {% if user_name != None %}
                     <h4>Leave a Comment:</h4>
@@ -47,10 +47,10 @@
                 <div class="row">
                     {% for comment in comments %}
                         <div class="col-sm-9 col-sm-offset-1">
-                            <h4>{{ comment.User_name }}
-                                <small>{{ comment.Date_sent }}</small>
+                            <h4>{{ comment.USER_NAME }}
+                                <small>{{ comment.DATA_SENT }}</small>
                             </h4>
-                            <p>{{ comment.Text_cmt }}</p>
+                            <p>{{ comment.TEXT_CMT }}</p>
                             <br><br>
                         </div>
                     {% endfor %}

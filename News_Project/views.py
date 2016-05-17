@@ -5,7 +5,7 @@ from django.db import connection
 from django.template.context_processors import csrf
 from sql_requests.insert import add_user, add_comment, add_like_sql, add_news
 from sql_requests.select import has_login, verify_user, get_news, get_name_user, get_comments, is_journalist, \
-    is_left_like, get_news_by_name, get_childs_articles, get_numlikes_journ, get_owner_article, get_article
+    is_left_like, get_news_by_name, get_childs_articles, get_numlikes_journ, get_owner_article, get_article, get_max_id_user
 from sql_requests.update import inc_numbers_like, inc_numbers_like_journalist, make_journalist
 
 
@@ -91,9 +91,7 @@ def register(request):
                 c['header'] = 'Header'
                 # TODO rewrite request in sql_request/select.py
                 # Get last user_id and set cookie
-                cursor = connection.cursor()
-                cursor.execute('SELECT MAX(user_id) FROM Users;')
-                user_id = cursor.fetchone()[0]
+                user_id = get_max_id_user()
 
                 request.session['user_id'] = user_id
                 return HttpResponseRedirect('/', c)

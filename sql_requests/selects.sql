@@ -35,6 +35,9 @@ BEGIN
 		IF v_pass != p_password THEN
 			p_out_user_id := 0;
 		END IF;
+		IF v_is_email_exists = 0 THEN
+		  p_out_user_id := 0;
+		END IF;
 END VERIFY_USER;
 /
 
@@ -131,3 +134,8 @@ BEGIN
 	OPEN p_out_cursor FOR SELECT * FROM NEWS WHERE News_id = p_article_id;
 END GET_ARTICLE;
 
+CREATE OR REPLACE PROCEDURE GET_MAX_ID_USER(p_out_id OUT NUMBER)
+AS
+BEGIN
+  SELECT MAX(User_Id) INTO p_out_id FROM Users;
+END GET_MAX_ID_USER;
