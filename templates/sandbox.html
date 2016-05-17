@@ -15,7 +15,7 @@
                             </a></h2>
                         <p class="blog-post-meta">
                             {{ article.DATA_SENT }} by
-                            <a href="#">{{ article.USER_ID|get_name_by_id }}</a>
+                            <a href="/user/{{ article.USER_ID|get_name_by_id }}">{{ article.USER_ID|get_name_by_id }}</a>
                         </p>
                         <p>{{ article.TEXT_NEWS }}</p>
                         <hr>

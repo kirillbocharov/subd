@@ -12,6 +12,7 @@ from sql_requests.update import inc_numbers_like, inc_numbers_like_journalist, m
 def index(request):
     c = {}
     user_id = request.session.get('user_id', None)
+    print 'us_id index = ', user_id
     if user_id is None:
         c['user_name'] = None
     else:
@@ -25,6 +26,7 @@ def my_page(request, user_name):
     errors = []
     c.update(csrf(request))
     user_id = request.session.get('user_id', None)
+    print 'usr id my_page =', user_id
     cur_user = get_name_user(user_id)
     if request.method == 'POST':
         data = request.POST
@@ -36,6 +38,8 @@ def my_page(request, user_name):
             is_sand = 0
         else:
             is_sand = 1
+        print 'usr id', user_id
+        print 'sand =', is_sand
         add_news(user_id, data['news'], data['header'], is_sand)
     c['user_name'] = user_name
     c['news'] = get_news_by_name(user_name)
@@ -47,6 +51,7 @@ def article(request, article_id):
     errors = []
     c = {}
     user_id = request.session.get('user_id', None)
+    print 'us_id article = ', user_id
     # request.session['name']
 
     if user_id is None:

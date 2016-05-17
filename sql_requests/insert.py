@@ -88,4 +88,4 @@ def add_like_sql(article_id, user_id):
     db = get_db_connection()
     cur = db.cursor()
     result_cursor = cur.var(cx_Oracle.CURSOR)
-    result = cur.callproc('ADD_LIKE_SQL', [article_id, user_id, ])
+    result = cur.callproc('ADD_LIKE', [article_id, user_id, ])

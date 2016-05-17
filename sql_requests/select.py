@@ -9,8 +9,13 @@ def get_name_user(id):
     db = get_db_connection()
     cur = db.cursor()
     result_cursor = cur.var(cx_Oracle.CURSOR)
-    result = cur.callproc('GET_NAME_USER', [id, result_cursor, ])
-    return result[1].fetchall()[0][1]
+    result = cur.callproc('GET_NAME_USER', [id, result_cursor, ])[1].fetchone()
+    if result is None:
+        return 'Undefined'
+    else:
+        return result[1]
+
+# print 'user ', get_name_user(1)
 
 # def get_name_user(id):
 #     cursor = connection.cursor()
@@ -170,13 +175,15 @@ def get_comments(article_id):
 
 
 def is_journalist(user_id):
-    numberp = None
+    print 'user_id is_journ', user_id
+    numberp = 0
     db = get_db_connection()
     cur = db.cursor()
     result_cursor = cur.var(cx_Oracle.CURSOR)
     result = cur.callproc('IS_JOURNALIST', [user_id, numberp, ])
     return bool(result[1])
 
+print 'is_journ =', is_journalist(8)
 
 # def is_left_like(article_id, user_id):
 #     cursor = connection.cursor()
@@ -191,12 +198,14 @@ def is_journalist(user_id):
 #         return True
 
 def is_left_like(article_id, user_id):
-    numberp = None
+    isLeft = 0
     db = get_db_connection()
     cur = db.cursor()
     result_cursor = cur.var(cx_Oracle.CURSOR)
-    result = cur.callproc('IS_LEFT_LIKE', [article_id, user_id, numberp, ])
-    return bool(result(numberp))
+    result = cur.callproc('IS_LEFT_LIKE', [article_id, user_id, isLeft, ])
+    return bool(result[2])
+
+print 'left like', is_left_like(12, 2)
 
 # def get_childs_articles():
 #     cursor = connection.cursor()

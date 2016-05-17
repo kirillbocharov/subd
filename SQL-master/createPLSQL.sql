@@ -12,7 +12,7 @@ CREATE TABLE Comments
         Comment_id NUMBER  NOT NULL ,
         News_id NUMBER  NOT NULL ,
         User_id NUMBER  NOT NULL ,
-        Date_sent VARCHAR2(20) NOT NULL ,
+        Date_sent VARCHAR2(60) NOT NULL ,
         Text_cmt char(1000)  NOT NULL,
         CONSTRAINT XPKComments PRIMARY KEY (Comment_id)
 );
@@ -53,7 +53,7 @@ CREATE TABLE News
         Text_news varchar2(3000) NOT NULL ,
         Header varchar2(500) NOT NULL,
         Foto varchar2(200) NOT NULL ,
-        Date_sent VARCHAR2(20) NOT NULL ,
+        Date_sent VARCHAR2(60) NOT NULL ,
         Is_sand NUMBER NOT NULL ,
         Number_likes NUMBER NOT NULL,
         Number_likes_journalist NUMBER NOT NULL, DEFAULT(0)
