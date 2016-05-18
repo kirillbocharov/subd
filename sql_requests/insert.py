@@ -21,8 +21,8 @@ from DBConnector.connector import get_db_connection
 def add_user(user_name, password, email, status_id=1):
     db = get_db_connection()
     cur = db.cursor()
-    result_cursor = cur.var(cx_Oracle.CURSOR)
-    result = cur.callproc('ADD_USER', [user_name, password, email, status_id, ])
+    hash_pass = to_md5(password)
+    result = cur.callproc('ADD_USER', [user_name, hash_pass, email, status_id, ])
 
 # def add_news(user_id, news, header, is_sand):
 #     cursor = connection.cursor()

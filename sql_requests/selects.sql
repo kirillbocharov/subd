@@ -30,13 +30,16 @@ AS
 	v_pass VARCHAR2(500);
 BEGIN
 	HAS_EMAIL(p_email, v_is_email_exists);
-		SELECT USERS.Password, User_id INTO v_pass, p_out_user_id 
-			FROM USERS WHERE Email=p_email;
-		IF v_pass != p_password THEN
-			p_out_user_id := 0;
-		END IF;
-		IF v_is_email_exists = 0 THEN
-		  p_out_user_id := 0;
+		IF v_is_email_exists = 1 THEN
+			
+			SELECT USERS.Password, User_id INTO v_pass, p_out_user_id 
+				FROM USERS WHERE Email=p_email;
+			
+			IF v_pass != p_password THEN
+				p_out_user_id := 0;
+			END IF;
+		ELSE
+		 	p_out_user_id := 0;
 		END IF;
 END VERIFY_USER;
 /
@@ -133,6 +136,7 @@ AS
 BEGIN
 	OPEN p_out_cursor FOR SELECT * FROM NEWS WHERE News_id = p_article_id;
 END GET_ARTICLE;
+/
 
 CREATE OR REPLACE PROCEDURE GET_MAX_ID_USER(p_out_id OUT NUMBER)
 AS

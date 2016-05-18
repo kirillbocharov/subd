@@ -118,10 +118,11 @@ def sign_in(request):
             errors.append('Write password')
         if not errors:
             authorized_user_id = verify_user(data['email'], data['password'])
+            print 'author ', authorized_user_id
         else:
             c['errors'] = errors
             return render_to_response('signIn.html', c)
-        if authorized_user_id is not None:
+        if authorized_user_id > 0:
             # user is authorized
             c['news'] = get_news()
             c['header'] = 'Header'
@@ -129,6 +130,7 @@ def sign_in(request):
             request.session['user_id'] = authorized_user_id
             return HttpResponseRedirect('/', c)
         else:
+            print 'hello'
             errors.append("The email you've entered doesn't match any account")
     c['errors'] = errors
     return render_to_response('signIn.html', c)
@@ -150,10 +152,6 @@ def add_like(request, article_id):
             if is_journalist(user_id):
                 inc_numbers_like_journalist(article_id)
                 inc_numbers_like(article_id)
-                owner_article = get_owner_article(article_id)
-                number_likes = get_numlikes_journ(owner_article)
-                if number_likes > 0:
-                    make_journalist(owner_article)
             else:
                 inc_numbers_like(article_id)
     address = '/article/get/{article_id}'.format(article_id=article_id)

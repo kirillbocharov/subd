@@ -120,8 +120,9 @@ def verify_user(email, password):
     db = get_db_connection()
     cur = db.cursor()
     result = cur.callproc('VERIFY_USER', [email, hash_pass, user_id, ])
-    return result[2]
+    return int(result[2])
 
+print 'verify =', verify_user('Vadik@email.com', 'asdf')
 
 # def get_news_by_name(user_name):
 #     cursor = connection.cursor()
@@ -183,7 +184,6 @@ def is_journalist(user_id):
     result = cur.callproc('IS_JOURNALIST', [user_id, numberp, ])
     return bool(result[1])
 
-print 'is_journ =', is_journalist(8)
 
 # def is_left_like(article_id, user_id):
 #     cursor = connection.cursor()

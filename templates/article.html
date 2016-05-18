@@ -17,8 +17,8 @@
                 <h2 class="blog-post-title">{{ article.HEADER }}</h2>
 
                 <p class="blog-post-meta">
-                    {{ article.DATA_SENT }} by
-                    <a href="#">{{ article.USER_ID|get_name_by_id }}</a>
+                    {{ article.DATE_SENT }} by
+                    <a href="/user/{{ article.USER_ID|get_name_by_id }}">{{ article.USER_ID|get_name_by_id }}</a>
                 </p>
 
                 <p>{{ article.Text_news }}</p>
