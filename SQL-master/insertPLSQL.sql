@@ -2,6 +2,13 @@ INSERT INTO Categories(Name) VALUES('Auto');
 INSERT INTO Categories(Name) VALUES('Nature');
 INSERT INTO Categories(Name) VALUES('Country');
 
+INSERT INTO Comments(News_id, User_id, Date_sent, Text_cmt) VALUES(1, 1, '12.02.2015', 'David Cameron knows how to be powerful politician');
+INSERT INTO Comments(News_id, User_id, Date_sent, Text_cmt) VALUES(2, 3, '10.02.2015', 'Its so terrible :( she is monster');
+INSERT INTO Comments(News_id, User_id, Date_sent, Text_cmt) VALUES(2, 1, '19.02.2015', 'I hope it will not happen again somewhere');
+INSERT INTO Comments(News_id, User_id, Date_sent, Text_cmt) VALUES(3, 4, '12.11.2015', 'Wow! This is our future!');
+INSERT INTO Comments(News_id, User_id, Date_sent, Text_cmt) VALUES(4, 4, '17.11.2015', 'Ted Cruz and Marco Rubio gave incredibly strong performances... It follows that we saw Cruz and Rubio maintain their position as the GOPs best debaters and Trump retain his position as the leader of the pack.');
+INSERT INTO Comments(News_id, User_id, Date_sent, Text_cmt) VALUES(5, 2, '12.04.2015', 'Personally, I think Star Wars was best left alone. The prequels SUCKED BIG TIME. And the new batch will just be LONG action movies with re-hashed lines and feel good moments from the originals. Not to mention a TON of PC thrown in for god measure.');
+
 
 INSERT INTO Roles(Name) VALUES('Admin');
 INSERT INTO Roles(Name) VALUES('User');
@@ -33,23 +40,6 @@ INSERT INTO News(Date_sent, Is_sand, Text_news, Header, Foto, Number_likes, User
 INSERT INTO News(Date_sent, Is_sand, Text_news, Header, Foto, Number_likes, User_id) VALUES('10.10.2010', 0, 'The first full reviews for the new Star Wars film The Force Awakens have hailed it as a triumph and a classic. UK newspapers were the first to publish reviews, with The Daily Telegraph and The Times each awarding it five stars. The Times critic Kate Muir wrote: Adults will be floored by tearful nostalgia because this is a classic. The Daily Mail''s Brian Viner described The Force Awakens as a triumph of escapism and the most exhilarating film yet in this mighty franchise. Viner began his four-star review with the words: Boy, has the force awoken, and raved about its almost balletic airborne battle scenes, evocative of all the best Second World War films. Viner began his four-star review with the words: Boy, has the force awoken, and raved about its almost balletic airborne battle scenes, evocative of all the best Second World War films. The Telegraphs Robbie Collin, who admitted to crying three times, said director JJ Abrams and his team had taken a slightly tattered franchise and restored its sense of magic and myth. Harrison Ford is terrific, he says, giving pilot Han Solo a sardonic, rough-chinned world-weariness thats perhaps not entirely acting. The sequel - the seventh movie in the Star Wars franchise - is a humongous piece of cinema, according to Kate Muir in The Times. She went on to describe Abrams as a better action director than Star Wars creator George Lucas, concluding that the film was exactly what we were hoping for. The Daily Mirror, John Hiscock wrote: All I can say is The Force Awakens evokes magical memories of 1977s Star Wars Episode IV: A New Hope, with plenty of humour, action, drama and heart. Christopher Wooton in the Independent gave the film four stars and said: Star Wars: The Force Awakens is actually probably objectively the best Star Wars yet, and would be held up as untouchable had it come first. The Guardian also gave the film five stars, with Peter Bradshaw pointing out: The Force Awakens is ridiculous and melodramatic and sentimental of course, but exciting and brimming with energy and its own kind of generosity.', 'Star Wars: The Force Awakens gets rave reviews', 'Url Article5', 5, 2);
 
 
-INSERT INTO Comments(News_id, User_id, Date_sent, Text_cmt) VALUES(1, 1, '12.02.2015', 'David Cameron knows how to be powerful politician');
-INSERT INTO Comments(News_id, User_id, Date_sent, Text_cmt) VALUES(2, 3, '10.02.2015', 'Its so terrible :( she is monster');
-INSERT INTO Comments(News_id, User_id, Date_sent, Text_cmt) VALUES(2, 1, '19.02.2015', 'I hope it will not happen again somewhere');
-INSERT INTO Comments(News_id, User_id, Date_sent, Text_cmt) VALUES(3, 4, '12.11.2015', 'Wow! This is our future!');
-INSERT INTO Comments(News_id, User_id, Date_sent, Text_cmt) VALUES(4, 4, '17.11.2015', 'Ted Cruz and Marco Rubio gave incredibly strong performances... It follows that we saw Cruz and Rubio maintain their position as the GOPs best debaters and Trump retain his position as the leader of the pack.');
-INSERT INTO Comments(News_id, User_id, Date_sent, Text_cmt) VALUES(5, 2, '12.04.2015', 'Personally, I think Star Wars was best left alone. The prequels SUCKED BIG TIME. And the new batch will just be LONG action movies with re-hashed lines and feel good moments from the originals. Not to mention a TON of PC thrown in for god measure.');
-
-
-INSERT INTO Likes(News_id, User_id) VALUES(1, 1);
-INSERT INTO Likes(News_id, User_id) VALUES(2, 1);
-INSERT INTO Likes(News_id, User_id) VALUES(3, 1);
-INSERT INTO Likes(News_id, User_id) VALUES(1, 3);
-INSERT INTO Likes(News_id, User_id) VALUES(2, 3);
-INSERT INTO Likes(News_id, User_id) VALUES(1, 4);
-INSERT INTO Likes(News_id, User_id) VALUES(1, 2);
-
-
 INSERT INTO News_Comments(News_id, Comment_id) VALUES(1,1);
 INSERT INTO News_Comments(News_id, Comment_id) VALUES(1,2);
 INSERT INTO News_Comments(News_id, Comment_id) VALUES(1,3);
@@ -62,3 +52,12 @@ INSERT INTO News_Categories(News_id, Category_id) VALUES(1,1);
 INSERT INTO News_Categories(News_id, Category_id) VALUES(2,1);
 INSERT INTO News_Categories(News_id, Category_id) VALUES(3,2);
 INSERT INTO News_Categories(News_id, Category_id) VALUES(4,3);
+
+
+INSERT INTO Likes(News_id, User_id) VALUES(1, 1);
+INSERT INTO Likes(News_id, User_id) VALUES(2, 1);
+INSERT INTO Likes(News_id, User_id) VALUES(3, 1);
+INSERT INTO Likes(News_id, User_id) VALUES(1, 3);
+INSERT INTO Likes(News_id, User_id) VALUES(2, 3);
+INSERT INTO Likes(News_id, User_id) VALUES(1, 4);
+INSERT INTO Likes(News_id, User_id) VALUES(1, 2);

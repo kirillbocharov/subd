@@ -83,15 +83,16 @@ DATABASES = {
         'ENGINE': 'django.db.backends.oracle',
         'NAME': 'xe',
         'USER': 'system',
-        'PASSWORD': 'iLsa4vyR8eaxM',
-        'HOST': '',
-        'PORT': '1521',
+        'PASSWORD': 'oracle',
+        'HOST': '192.168.99.100',
+        'PORT': '32769',
     }
 }
 
-MY_DATABASE = {'host': "localhost",
-               'user': "vadik",
-               'passwd': "iLsa4vyR8eaxM",
+MY_DATABASE = {'host': "192.168.99.100",
+               'port': 32769,
+               'user': "system",
+               'passwd': "oracle",
                'db': "XE"}
 
 # Internationalization
