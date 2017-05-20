@@ -1,6 +1,6 @@
 from django.db import connection
 import cx_Oracle
-from DBConnector.connector import get_db_connection
+from oracle_connector.connector import get_db_connection
 
 # def inc_numbers_like(article_id):
 #     cursor = connection.cursor()

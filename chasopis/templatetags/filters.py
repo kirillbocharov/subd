@@ -1,5 +1,5 @@
 from django import template
-from sql_requests.select import get_name_user
+from database.select import get_name_user
 
 register = template.Library()
 

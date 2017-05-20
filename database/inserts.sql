@@ -17,10 +17,14 @@ CREATE OR REPLACE PROCEDURE ADD_NEWS(
 	p_header IN VARCHAR2,
 	p_foto IN VARCHAR2,
 	p_number_likes IN VARCHAR2,
-	p_is_sand IN NUMBER) AS
+	p_is_sand IN NUMBER,
+  p_category_id IN NUMBER) AS
+  v_id NUMBER;
 BEGIN
 	INSERT INTO NEWS(Date_sent, Is_sand, Text_news, Header, Foto, Number_likes, User_id)
 		VALUES(p_data_sent, p_is_sand, p_news, p_header, p_foto, p_number_likes, p_user_id);
+  SELECT MAX(News_id) INTO v_id FROM NEWS;
+  INSERT INTO NEWS_CATEGORIES (Category_id, News_id) VALUES (p_category_id, v_id);
 		commit;
 END ADD_NEWS;
 /
@@ -45,3 +49,25 @@ BEGIN
 		VALUES(p_article_id, p_user_id);
 		commit;
 END ADD_LIKE;
+/
+
+CREATE OR REPLACE PROCEDURE SEND_MESSAGE(
+	u_from_id IN NUMBER,
+	u_to_id IN NUMBER,
+	in_text IN VARCHAR) AS
+BEGIN
+	INSERT INTO PRIVATE_MESSAGES(Sender_id, Receiver_id, Date_sent, Text)
+		VALUES(u_from_id, u_to_id, CURRENT_DATE, in_text);
+		commit;
+END SEND_MESSAGE;
+
+CREATE OR REPLACE PROCEDURE INSERT_APPROVAL(
+	p_article_id IN NUMBER,
+	p_user_id IN NUMBER,
+	p_status IN NUMBER) AS
+BEGIN
+	INSERT INTO NEWS_APPROVALS (News_id, User_id, Approval_date, Status)
+		VALUES (p_article_id, p_user_id, CURRENT_DATE, p_status);
+		commit;
+END INSERT_APPROVAL;
+/

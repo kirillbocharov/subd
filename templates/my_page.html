@@ -1,27 +1,17 @@
 {% extends "index.html" %}
-{% load my_filter %}
+{% load filters %}
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-sm-9 col-sm-offset-1">
                 {% if cur_user == user_name %}
-                    <h4>Add News:</h4>
-                    <form accept-charset="UTF-8" role="form" method="post">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <textarea name="header" class="form-control" rows="1" placeholder="HEADER"
-                                      required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <textarea name="news" class="form-control" rows="6" placeholder="Text article"
-                                      required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </form>
+                    <h1>News submitted by me</h1>
+                {% else %}
+                    <h1>News submitted by {{ cur_user }}</h1>
                 {% endif %}
                 {% for article in news %}
                     <h2 class="blog-post-title">
-                        <a href="/article/get/{{ article.NEWS_ID }}">
+                        <a href="/article/{{ article.NEWS_ID }}">
                             {{ article.HEADER }}
                         </a></h2>
                     <p class="blog-post-meta">

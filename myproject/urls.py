@@ -15,16 +15,21 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from News_Project import views
+from chasopis import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.index, name='index'),
     url(r'^register/$', views.register),
     url(r'^login', views.sign_in),
-    url(r'^article/get/(?P<article_id>\d+)/$', views.article),
-    url(r'^article/add_like/(?P<article_id>\d+)/$', views.add_like),
-    url(r'^user/(?P<user_name>\w+)/$', views.my_page),
-    url(r'^exit', views.exit),
-    url(r'^sandbox', views.sandbox),
+    url(r'^article/(?P<article_id>\d+)/$', views.article),
+    url(r'^bookmark/(?P<article_id>\d+)/$', views.add_like),
+    url(r'^user/(?P<user_name>\w+)/$', views.user_page),
+    url(r'^inbox/?$', views.inbox),
+    url(r'^submit/?$', views.submit),
+    url(r'^logout/?$', views.logout),
+    url(r'^sandbox/?(\d+)?/?$', views.sandbox),
+    url(r'^delete/?(\d+)/?$', views.remove_news),
+    url(r'^approve/?(\d+)/?$', views.approve_news),
+    url(r'^disapprove/?(\d+)/?$', views.disapprove_news),
 ]

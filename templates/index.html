@@ -1,30 +1,40 @@
 {% load static %}
 {% load staticfiles %}
-{% load my_filter %}
+{% load filters %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>{% block title %}Chasopis.by{% endblock %}</title>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.misn.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap-dropdown.js">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    {% block meta %}
+        <script src="/static/js/markdown.min.js"></script>
+        <script>
+            $(function () {
+                $('.article_content').each(function () {
+                    $(this).html(markdown.toHTML($(this).html()));
+                });
+            });
+        </script>
+    {% endblock %}
 </head>
 <body>
 {% block navbar %}
     <div class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">SUBD</a>
+                <a class="navbar-brand" href="/">Chasopis.by</a>
             </div>
             <div>
                 <ul class="nav navbar-nav">
                     {% if user_name != None %}
-                        <li><a href="/user/{{ user_name }}">My page</a></li>
-                        <li><a href="/sandbox/">Sandbox</a></li>
+                        <li><a href="/sandbox/">Article sandbox</a></li>
+                        <li><a href="/submit/">Submit article</a></li>
+                        {% block menumore %}
+                        {% endblock %}
                     {% endif %}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -36,9 +46,10 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">Hello, {{ user_name }} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/user/{{ user_name }}">Room</a></li>
+                            <li><a href="/user/{{ user_name }}">Personal page</a></li>
+                            <li><a href="/inbox/">Private messages</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="/exit">Exit</a></li>
+                            <li><a href="/logout">Log out</a></li>
                         </ul>
                     </li>
                     {% endif %}
@@ -53,7 +64,6 @@
     <div class="blog-header">
         <div class="container">
             <h1 class="blog-title">{{ header }}</h1>
-
             <h1 class="us"></h1>
         </div>
     </div>
@@ -65,14 +75,21 @@
                 <div class="blog-post">
                     {% for article in news %}
                         <h2 class="blog-post-title">
-                            <a href="/article/get/{{ article.NEWS_ID }}">
+                            <a href="/article/{{ article.NEWS_ID }}">
                                 {{ article.HEADER }}
-                            </a></h2>
+                            </a>
+                        </h2>
                         <p class="blog-post-meta">
-                            {{ article.DATE_SENT }} by
-                            <a href="/user/{{ article.USER_ID|get_name_by_id }}">{{ article.USER_ID|get_name_by_id }}</a>
+                            {{ article.DATE_SENT }}
+                            {% if article.CATEGORY_ID %}
+                                in <a href="/sandbox/{{ article.CATEGORY_ID }}">{{ article.CATEGORY_NAME }}</a>
+                            {% endif %}
+                            {% if is_admin %}
+                                | <a href="/disapprove/{{ article.NEWS_ID }}">Disapprove</a>
+                                | <a href="/delete/{{ article.NEWS_ID }}">Delete</a>
+                            {% endif %}
                         </p>
-                        <p>{{ article.TEXT_NEWS }}</p>
+                        <p class="article_content">{{ article.TEXT_NEWS }}</p>
                         <hr>
                     {% endfor %}
                 </div>

@@ -108,3 +108,42 @@ CREATE OR REPLACE TRIGGER AUTO_INC_STATUSES
                 END IF;
                 :new.Status_id := v_id;
 END AUTO_INC_STATUSES;
+/
+
+CREATE OR REPLACE TRIGGER AUTO_INC_PRIVATE_MESSAGES
+                BEFORE INSERT ON PRIVATE_MESSAGES
+                FOR EACH ROW
+              DECLARE
+              v_id NUMBER;
+              BEGIN
+                SELECT MAX(Message_id) + 1 INTO v_id FROM PRIVATE_MESSAGES;
+                IF v_id IS NULL THEN
+                  v_id := 1;
+                END IF;
+                :new.Message_id := v_id;
+END AUTO_INC_PRIVATE_MESSAGES;
+/
+
+CREATE OR REPLACE TRIGGER AUTO_INC_APPROVALS
+                BEFORE INSERT ON NEWS_APPROVALS
+                FOR EACH ROW
+              DECLARE
+              v_id NUMBER;
+              BEGIN
+                SELECT MAX(Approval_id) + 1 INTO v_id FROM NEWS_APPROVALS;
+                IF v_id IS NULL THEN
+                  v_id := 1;
+                END IF;
+                :new.Approval_id := v_id;
+END NEWS_APPROVALS;
+/
+
+CREATE OR REPLACE TRIGGER AUTO_APPROVE_ARTICLE
+                AFTER INSERT ON NEWS_APPROVALS
+                FOR EACH ROW
+              DECLARE
+              v_id NUMBER;
+              BEGIN
+                UPDATE NEWS SET is_sand = :new.Status WHERE NEWS_ID = :new.News_id;
+END AUTO_APPROVE_ARTICLE;
+/

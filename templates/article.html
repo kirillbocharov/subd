@@ -1,15 +1,19 @@
 {% extends "index.html" %}
 {% load static %}
 {% load staticfiles %}
-{% load my_filter %}
+{% load filters %}
 
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% block title %}{{ article.HEADER }}{% endblock %}
+
+{% block meta %}
+    <script src="/static/js/markdown.min.js"></script>
+    <script>
+        $(function () {
+            $('#news_content').html(markdown.toHTML($('#news_content').html()));
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="row">
@@ -21,11 +25,16 @@
                     <a href="/user/{{ article.USER_ID|get_name_by_id }}">{{ article.USER_ID|get_name_by_id }}</a>
                 </p>
 
-                <p>{{ article.Text_news }}</p>
-                <a href="/article/add_like/{{ article.NEWS_ID }}/"><img src="{% static 'images/likeButton.png' %}"
-                                                                        width="30"
-                                                                        height="30 "></a>
-                <span class="label label-primary">{{ article.NUMBER_LIKES }}</span>
+                <p id="news_content">{{ article.TEXT_NEWS }}</p>
+                {% if is_bookmarked %}
+                <a href="/bookmark/{{ article.NEWS_ID }}/">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </a>
+                {% else %}
+                <a href="/bookmark/{{ article.NEWS_ID }}/">
+                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                </a>
+                {% endif %}
                 {% if article.IS_SAND == 1 %}
                     <span class="label label-success">{{ article.NUMBER_LIKES_JOURNALIST }}</span>
                 {% endif %}
@@ -46,7 +55,7 @@
 
                 <div class="row">
                     {% for comment in comments %}
-                        <div class="col-sm-9 col-sm-offset-1">
+                        <div class="col-sm-6">
                             <h4>{{ comment.USER_NAME }}
                                 <small>{{ comment.DATE_SENT }}</small>
                             </h4>
@@ -61,5 +70,3 @@
     </div>
 
 {% endblock %}
-</body>
-</html>

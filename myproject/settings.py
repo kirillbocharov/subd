@@ -25,7 +25,7 @@ SECRET_KEY = 'm=+p-=bgdk^#(wuommqhbj6v_tdpzwvlhh*qc533i(b@rg-9tz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['a63b32a6.ngrok.io']
 
 
 # Application definition
@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.templatetags',
-    'News_Project',
+    'chasopis',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -52,7 +52,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'SUBD_Project.urls'
+ROOT_URLCONF = 'myproject.urls'
 
 TEMPLATES = [
     {
@@ -70,12 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'SUBD_Project.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
+WSGI_APPLICATION = 'myproject.wsgi.application'
 
 
 DATABASES = {
@@ -84,13 +79,13 @@ DATABASES = {
         'NAME': 'xe',
         'USER': 'system',
         'PASSWORD': 'oracle',
-        'HOST': '192.168.99.100',
-        'PORT': '32769',
+        'HOST': '127.0.0.1',
+        'PORT': '1521',
     }
 }
 
-MY_DATABASE = {'host': "192.168.99.100",
-               'port': 32769,
+MY_DATABASE = {'host': '127.0.0.1',
+               'port': 1521,
                'user': "system",
                'passwd': "oracle",
                'db': "XE"}
