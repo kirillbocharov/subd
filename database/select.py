@@ -182,3 +182,11 @@ def get_approvals(news_id):
     result = cur.callproc('GET_APPROVALS', [news_id, result_cursor, ])
     fetchall = result[1]
     return dictfetchall(fetchall)
+
+
+def get_bookmarks(user_id):
+    db = get_db_connection()
+    cur = db.cursor()
+    result_cursor = cur.var(cx_Oracle.CURSOR)
+    result = cur.callproc('GET_BOOKMAKRS', [user_id, result_cursor, ])
+    return dictfetchall(result[1])

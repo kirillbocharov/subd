@@ -1,12 +1,12 @@
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context_processors import csrf
-from database.insert import add_user, add_comment, add_like_sql, add_news, send_message, do_approve_news
+from database.insert import add_user, add_comment, add_bookmark, add_news, send_message, do_approve_news
 from database.select import has_login, is_user_exists, get_news, get_name_user, get_comments, is_admin, \
     is_left_like, get_news_by_name, get_sandboxed_articles, get_article, get_max_id_user, \
-    get_private_messages, get_id_user, get_categories, get_category_name, get_approvals
-from database.update import inc_numbers_like, inc_numbers_like_journalist, make_journalist
-from database.delete import delete_news
+    get_private_messages, get_id_user, get_categories, get_category_name, get_approvals, get_bookmarks
+from database.update import update_article
+from database.delete import delete_news, delete_bookmark
 
 
 def index(request):
@@ -33,13 +33,21 @@ def user_page(request, user_name):
     return render_to_response('my_page.html', c)
 
 
-def submit(request):
+def submit(request, news_id=None):
     c = {}
     errors = []
     c.update(csrf(request))
     user_id = request.session.get('user_id', None)
     cur_user = get_name_user(user_id)
     if request.method == 'POST':
+        if news_id is not None:
+            t_article = get_article(news_id)
+            if not t_article:
+                return HttpResponseRedirect('/')
+
+            if not is_admin(user_id) and t_article.USER_ID != user_id:
+                return HttpResponseRedirect('/')
+
         data = request.POST
         if not data.get('news', ''):
             errors.append('Article content is required!')
@@ -53,10 +61,16 @@ def submit(request):
         else:
             post_to_sandbox = 1
         if not errors:
-            add_news(user_id, data['news'], data['header'], post_to_sandbox, category)
+            if news_id is not None:
+                update_article(news_id, data['header'], data['news'], category)
+            else:
+                add_news(user_id, data['news'], data['header'], post_to_sandbox, category)
             return HttpResponseRedirect('/user/' + cur_user)
         else:
             c['errors'] = errors
+    c['article'] = None
+    if news_id is not None:
+        c['article'] = get_article(news_id)
     c['categories'] = get_categories()
     c['user_name'] = cur_user
     return render_to_response('submit.html', c)
@@ -83,7 +97,9 @@ def article(request, article_id):
     c['article'] = get_article(article_id)
     c['user_name'] = user_name
     c['is_admin'] = is_admin(user_id)
-    c['history'] = get_approvals()
+    c['is_bookmarked'] = not is_left_like(article_id, user_id)
+    print c['is_bookmarked']
+    c['history'] = get_approvals(article_id)
     c.update(csrf(request))
 
     return render_to_response('article.html', c)
@@ -120,6 +136,22 @@ def inbox(request):
     c.update(csrf(request))
 
     return render_to_response('inbox.html', c)
+
+
+def bookmarks(request):
+    c = {}
+    user_id = request.session.get('user_id', None)
+
+    if user_id is None:
+        user_name = None
+    else:
+        user_name = get_name_user(user_id)
+
+    c['bookmarks'] = get_bookmarks(user_id)
+    c['user_name'] = user_name
+    c['current_id'] = user_id
+
+    return render_to_response('bookmarks.html', c)
 
 
 def register(request):
@@ -188,16 +220,15 @@ def logout(request):
     return HttpResponseRedirect('/', get_news())
 
 
-def add_like(request, article_id):
+def bookmark(request, article_id):
     user_id = request.session.get('user_id', None)
     if user_id is not None:
+        print article_id, user_id
+        print is_left_like(article_id, user_id)
         if not is_left_like(article_id, user_id):
-            add_like_sql(article_id, user_id)
-            if is_admin(user_id):
-                inc_numbers_like_journalist(article_id)
-                inc_numbers_like(article_id)
-            else:
-                inc_numbers_like(article_id)
+            add_bookmark(article_id, user_id)
+        else:
+            delete_bookmark(article_id, user_id)
     address = '/article/{article_id}'.format(article_id=article_id)
     return HttpResponseRedirect(address)
 
@@ -214,6 +245,7 @@ def sandbox(request, category_id=None):
     data['category_name'] = get_category_name(category_id)
     data['user_name'] = user_name
     data['is_admin'] = is_admin(user_id)
+    data['user_id'] = user_id
     return render_to_response('sandbox.html', data)
 
 

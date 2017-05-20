@@ -33,7 +33,9 @@
                             {% if article.CATEGORY_ID %}
                                 in <a href="/sandbox/{{ article.CATEGORY_ID }}">{{ article.CATEGORY_NAME }}</a>
                             {% endif %}
+                            {% if article.USER_ID == user_id or is_admin %}
                             | <a href="/submit/{{ article.NEWS_ID }}">Edit</a>
+                            {% endif %}
                             {% if is_admin %}
                                 | <a href="/approve/{{ article.NEWS_ID }}">Approve</a>
                                 | <a href="/delete/{{ article.NEWS_ID }}">Delete</a>

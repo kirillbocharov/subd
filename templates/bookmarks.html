@@ -1,0 +1,29 @@
+{% extends "index.html" %}
+{% load static %}
+{% load staticfiles %}
+{% load filters %}
+
+{% block title %}Your bookmarks{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2 class="blog-post-title">Your bookmarks</h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul>
+                            {% for bookmark in bookmarks %}
+                            <li>
+                                <a href="/article/{{ bookmark.NEWS_ID }}" target="_blank">{{ bookmark.HEADER }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

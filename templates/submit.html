@@ -24,18 +24,20 @@
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="title">Title</label>
-                        <input type="text" name="header" class="form-control" id="title" placeholder="Title" required>
+                        <input type="text" name="header" class="form-control" id="title" placeholder="Title" required
+                        {% if article %}value="{{ article.HEADER }}"{% endif %}>
                     </div>
                     <div class="form-group">
                         <label for="category">Category</label>
                         <select name="category" class="form-control" id="category">
                             {% for category in categories %}
-                            <option value="{{ category.CATEGORY_ID }}">{{ category.NAME }}</option>
+                            <option value="{{ category.CATEGORY_ID }}"
+                            {% if article and article.CATEGORY_ID == category.CATEGORY_ID %}selected{% endif %}>{{ category.NAME }}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="form-group">
-                        <textarea name="news" class="form-control" rows="6" id="news" required></textarea>
+                        <textarea name="news" class="form-control" rows="6" id="news" required>{% if article %}{{ article.TEXT_NEWS }}{% endif %}</textarea>
                     </div>
                     {% if errors %}
                         <ul class="errors">

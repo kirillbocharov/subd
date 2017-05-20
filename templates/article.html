@@ -28,15 +28,19 @@
                 <p id="news_content">{{ article.TEXT_NEWS }}</p>
                 {% if is_bookmarked %}
                 <a href="/bookmark/{{ article.NEWS_ID }}/">
-                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Add to bookmark
                 </a>
                 {% else %}
                 <a href="/bookmark/{{ article.NEWS_ID }}/">
-                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Remove from bookmarks
                 </a>
                 {% endif %}
-                {% if article.IS_SAND == 1 %}
-                    <span class="label label-success">{{ article.NUMBER_LIKES_JOURNALIST }}</span>
+                {% if  is_admin %}
+                    <ul>
+                    {% for item in history %}
+                        <li><small>{{ item.APPROVAL_DATE }}</small> {{ item.USER_NAME }} changes status to {% if item.STATUS == 1 %}SANDBOX{% else %}MAINPAGE{% endif %}</li>
+                    {% endfor %}
+                    </ul>
                 {% endif %}
                 {% if user_name != None %}
                     <h4>Leave a Comment:</h4>
@@ -55,7 +59,7 @@
 
                 <div class="row">
                     {% for comment in comments %}
-                        <div class="col-sm-6">
+                        <div class="col-sm-7">
                             <h4>{{ comment.USER_NAME }}
                                 <small>{{ comment.DATE_SENT }}</small>
                             </h4>

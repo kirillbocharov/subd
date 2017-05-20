@@ -17,7 +17,7 @@ def add_news(user_id, content, title, to_sandbox, category_id):
     date_str = datetime.now().strftime('%b %d, %Y, %I:%M %p')
     cur = db.cursor()
     result_cursor = cur.var(cx_Oracle.CURSOR)
-    result = cur.callproc('ADD_NEWS', [date_str, user_id, content, title, '', 0, to_sandbox, category_id])
+    result = cur.callproc('ADD_NEWS', [date_str, user_id, content, title, '/noimage.png', 0, to_sandbox, category_id])
 
 
 def add_comment(news_id, user_id, comment):
@@ -28,11 +28,11 @@ def add_comment(news_id, user_id, comment):
     result = cur.callproc('ADD_COMMENT', [news_id, user_id, date_str, comment, ])
 
 
-def add_like_sql(article_id, user_id):
+def add_bookmark(article_id, user_id):
     db = get_db_connection()
     cur = db.cursor()
     result_cursor = cur.var(cx_Oracle.CURSOR)
-    result = cur.callproc('ADD_LIKE', [article_id, user_id, ])
+    result = cur.callproc('ADD_BOOKMARK', [article_id, user_id, ])
 
 
 def send_message(from_id, to_id, text):

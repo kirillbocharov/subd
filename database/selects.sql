@@ -151,7 +151,7 @@ CREATE OR REPLACE PROCEDURE GET_ARTICLE(
 	p_out_cursor OUT sys_refcursor)
 AS
 BEGIN
-	OPEN p_out_cursor FOR SELECT * FROM NEWS WHERE News_id = p_article_id;
+	OPEN p_out_cursor FOR SELECT nn.*, nc.CATEGORY_ID FROM NEWS nn LEFT JOIN NEWS_CATEGORIES nc ON nn.NEWS_ID = nc.NEWS_ID WHERE nn.News_id = p_article_id;
 END GET_ARTICLE;
 /
 
@@ -198,4 +198,13 @@ BEGIN
 		INNER JOIN USERS u ON na.USER_ID = u.USER_ID
 	WHERE na.NEWS_ID = p_news_id;
 END GET_APPROVALS;
+/
+
+CREATE OR REPLACE PROCEDURE GET_BOOKMAKRS(p_user_id IN NUMBER, p_out_cursor OUT sys_refcursor)
+AS
+BEGIN
+	OPEN p_out_cursor FOR SELECT LIKES.*, NEWS.Header FROM
+		LIKES INNER JOIN NEWS ON NEWS.News_id = LIKES.News_id
+		AND LIKES.User_id = p_user_id;
+END GET_BOOKMAKRS;
 /

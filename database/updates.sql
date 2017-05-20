@@ -1,7 +1,11 @@
-CREATE OR REPLACE PROCEDURE INC_NUMBERS_LIKE(p_article_id IN NUMBER)
+CREATE OR REPLACE PROCEDURE UPDATE_ARTICLE(p_article_id IN NUMBER, p_title IN VARCHAR, p_text IN VARCHAR, p_cat_id IN NUMBER )
 AS
 BEGIN
-	UPDATE NEWS SET Number_likes = Number_likes + 1 WHERE News_id = p_article_id;
+	UPDATE NEWS SET Header = p_title, Text_news = p_text WHERE News_id = p_article_id;
+	UPDATE NEWS_CATEGORIES SET Category_id = p_cat_id WHERE News_id = p_article_id;
 	commit;
-END INC_NUMBERS_LIKE;
+END UPDATE_ARTICLE;
 /
+
+
+

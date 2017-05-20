@@ -9,3 +9,9 @@ def delete_news(news_id):
     db = get_db_connection()
     cur = db.cursor()
     result = cur.callproc('DELETE_NEWS', [news_id])
+
+
+def delete_bookmark(news_id, user_id):
+    db = get_db_connection()
+    cur = db.cursor()
+    result = cur.callproc('DELETE_BOOKMARK', [news_id, user_id])
